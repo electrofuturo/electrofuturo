@@ -1,9 +1,9 @@
 /* ============================================================
-   CHIPS DE CATEGORÍA + SUBCATEGORÍAS DESPLEGABLES
+   CHIPS DE CATEGORÍA + SUBCATEGORÍAS CON "TODO EN..."
    ============================================================ */
 (function () {
   'use strict';
-  var prods = function () { return Array.isArray(window.EF_PRODUCTOS) ? window.EF_PRODUCTOS : (window.EF && EF.productos ? EF.productos : []); };
+  var prods = function () { return Array.isArray(window.EF_PRODUCTOS) ? window.EF_PRODUCTOS : []; };
 
   function contarPorCat() { var m = {}; prods().forEach(function (p) { m[p.categoria] = (m[p.categoria] || 0) + 1; }); return m; }
   function contarSubcats(cat) { var m = {}; prods().forEach(function (p) { if (cat && p.categoria !== cat) return; m[p.subcategoria] = (m[p.subcategoria] || 0) + 1; }); return m; }
@@ -15,16 +15,33 @@
   }
 
   var catActiva = '', subActiva = '';
+  /* Nombre corto para la chip "Todo en..." */
+  var NOMBRE_CORTO = {
+    'Cargadores y cables': 'Cargadores',
+    'Audífonos y parlantes': 'Audio',
+    'Power bank y tomas': 'Power bank',
+    'Computación': 'Computación',
+    'Pantallas': 'Repuestos',
+    'Baterías': 'Baterías',
+    'Smartwatch': 'Smartwatch',
+    'Accesorios': 'Accesorios'
+  };
 
   function pintarSubcats(cat) {
     var cont = document.getElementById('ef-subcats'); if (!cont) return;
     if (!cat) { cont.classList.remove('abierta'); cont.innerHTML = ''; subActiva = ''; return; }
     var subs = contarSubcats(cat);
+    var totalCat = 0; Object.values(subs).forEach(function(n){totalCat += n;});
     var claves = Object.keys(subs).sort(function (a, b) { return a.localeCompare(b, 'es'); });
     if (!claves.length) { cont.classList.remove('abierta'); cont.innerHTML = ''; return; }
-    cont.innerHTML = claves.map(function (s) {
+
+    var nombre = NOMBRE_CORTO[cat] || cat;
+    /* Chip "Todo en [Categoría]" */
+    var html = '<button class="ef-sub-chip' + (!subActiva ? ' ef-sub-chip--activa' : '') + '" data-sub-chip="" type="button">Todo en ' + nombre + '<span class="ef-sub-count">' + totalCat + '</span></button>';
+    html += claves.map(function (s) {
       return '<button class="ef-sub-chip' + (s === subActiva ? ' ef-sub-chip--activa' : '') + '" data-sub-chip="' + s + '" type="button">' + s + '<span class="ef-sub-count">' + subs[s] + '</span></button>';
     }).join('');
+    cont.innerHTML = html;
     cont.classList.add('abierta');
   }
 
@@ -46,7 +63,6 @@
     aplicarFiltro(catActiva, subActiva);
   }
 
-  /* Conecta con app.js: usa irAlCatalogo si existe, sino manipula estado directamente */
   function aplicarFiltro(cat, sub) {
     if (typeof window.irAlCatalogo === 'function') {
       var opts = {};
@@ -67,6 +83,7 @@
         if (sub) clickSub(sub.dataset.subChip);
       });
     }
+    /* Drag to scroll en desktop */
     var scroll = document.getElementById('ef-cats-scroll');
     if (scroll) {
       var down = false, startX, scrollL;

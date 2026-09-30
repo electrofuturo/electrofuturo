@@ -143,9 +143,7 @@ function cardProducto(p) {
       <div class="sku">${p.sku}</div>
       <h3 data-ver="${p.sku}">${esc(p.nombre)}</h3>
       <p class="marca-p">${esc(p.marca)} · ${esc(p.subcategoria)}</p>
-      <div class="pie">
-        <div class="precio">${money(p.precio)}<small>${p.precio != null ? 'COP' : 'Disponibilidad'}</small></div>
-      </div>
+      <div class="pie"></div>
       <div class="prod-acciones">
         ${p.agotado
           ? '<span class="badge-agotado">Agotado</span>'
@@ -308,10 +306,8 @@ function abrirModal(sku) {
       ${p.linea === 'tecnica' ? '<span>Línea técnica</span>' : ''}
     </div>
     <div class="modal-precio">
-      <span class="v">${money(p.precio)}</span>
-      <span class="u">${p.precio != null ? 'COP · IVA incluido' : 'Precio por confirmar'}</span>
+      <span class="u">Consulta precio y disponibilidad por WhatsApp</span>
     </div>
-    ${p.agotado ? '' : escalaPrecio(p.precio)}
     ${mods.length ? `<div class="modal-glosario">
       <h5>Qué significa esta referencia</h5>
       <dl style="margin:0">
@@ -349,7 +345,7 @@ function cerrarModal() {
 function modalConsultar() {
   const p = EF.productos.find(x => x.sku === MODAL.sku);
   if (!p) return;
-  const txt = `Hola, quiero información sobre:\n\n*${p.nombre}*\nCódigo: ${p.sku}\nPrecio publicado: ${money(p.precio)}\n\n¿Está disponible?`;
+  const txt = `Hola, quiero información sobre:\n\n*${p.nombre}*\nCódigo: ${p.sku}\n\n¿Está disponible y cuál es el precio?`;
   window.open(`https://wa.me/${EF_CONFIG.WHATSAPP}?text=${encodeURIComponent(txt)}`, '_blank');
 }
 function modalAvisar() {

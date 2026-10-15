@@ -1199,6 +1199,30 @@ body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opa
   .nav-top{padding:10px 20px 2px}
   .nav-pills{padding:12px 20px 18px}
 }
+/* ---------- Zoom de producto (desktop: lupa que sigue cursor · móvil: overlay fullscreen) ---------- */
+.prod-foto{position:relative}
+.zoom-lens{position:absolute;width:140px;height:140px;border-radius:50%;border:3px solid var(--cian);
+  background-repeat:no-repeat;box-shadow:0 4px 24px rgba(0,0,0,.25),0 0 0 4px rgba(255,255,255,.8);
+  pointer-events:none;opacity:0;transform:scale(0);transition:opacity .2s,transform .2s;z-index:10;
+  cursor:none;will-change:transform}
+.zoom-lens.activa{opacity:1;transform:scale(1)}
+/* Overlay móvil */
+.zoom-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.92);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;
+  transition:opacity .3s;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.zoom-overlay.abierto{opacity:1;pointer-events:auto}
+.zoom-overlay img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:12px;
+  touch-action:pinch-zoom;user-select:none;-webkit-user-select:none}
+.zoom-overlay .zoom-cerrar{position:absolute;top:env(safe-area-inset-top,16px);right:16px;
+  width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.3rem;
+  display:grid;place-items:center;cursor:pointer;z-index:2;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.zoom-overlay .zoom-nombre{position:absolute;bottom:env(safe-area-inset-bottom,20px);left:0;right:0;
+  text-align:center;color:#fff;font-size:.82rem;font-family:var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;opacity:.7;padding:0 24px}
+@media(hover:none){.zoom-lens{display:none}}
+
 @media(max-width:1000px){
   .nav-puntos{display:flex}
   .nav-pills{padding-bottom:12px}

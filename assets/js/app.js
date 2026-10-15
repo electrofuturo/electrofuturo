@@ -1062,4 +1062,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const abajo = scrollY > 12;
     if (abajo !== ultimo) { nav.classList.toggle('desplazado', abajo); ultimo = abajo; }
   }, { passive: true });
+
+  /* ==========================================================
+     ZOOM DE PRODUCTO — hover magnifier (desktop) + overlay (móvil)
+     ========================================================== */
+  const ZOOM_FACTOR = 2.5;
+  const LENS_SIZE = 140;
+  const esTouch = matchMedia('(hover:none)').matches;
+
+  // --- Desktop: lente circular que sigue el cursor ---
+  if (!esTouch) {
+    let lensEl = null;
+    function crearLens(container, img) {
+      if (lensEl) lensEl.remove();
+      lensEl = document.createElement('div');
+      lensEl.className = 'zoom-lens';
+      lensEl.style.backgroundImage = `url("${img.src}")`;
+      lensEl.style.backgroundSize = `${img.naturalWidth * ZOOM_FACTOR}px ${img.naturalHeight * ZOOM_FACTOR}px`;
+      container.appendChild(lensEl);
+      return lensEl;
+    }
+    document.addEventListener('mouseenter', function(e) {
+      const foto = e.target.closest('.prod-foto');
+      if (!foto) return;
+      const img = foto.querySelector('img');
+      if (!img || !img.naturalWidth) return;
+      const lens = crearLens(foto, img);
+      const mover = function(ev) {
+        const rect = foto.getBoundingClientRect();
+        let x = ev.clientX - rect.left;
+        let y = ev.clientY - rect.top;
+        x = Math.max(0, Math.min(x, rect.width));
+        y = Math.max(0, Math.min(y, rect.height));
+        lens.style.left = (x - LENS_SIZE / 2) + 'px';
+        lens.style.top = (y - LENS_SIZE / 2) + 'px';
+        const bgX = (x / rect.width) * img.naturalWidth * ZOOM_FACTOR - LENS_SIZE / 2;
+        const bgY = (y / rect.height) * img.naturalHeight * ZOOM_FACTOR - LENS_SIZE / 2;
+        lens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+        lens.classList.add('activa');
+      };
+      foto.addEventListener('mousemove', mover);
+      foto.addEventListener('mouseleave', function salir() {
+        lens.classList.remove('activa');
+        setTimeout(() => lens.remove(), 200);
+        foto.removeEventListener('mousemove', mover);
+        foto.removeEventListener('mouseleave', salir);
+      });
+    }, true);
+  }
+
+  // --- Móvil: overlay con imagen full + pinch-to-zoom nativo ---
+  if (esTouch) {
+    let overlay = document.createElement('div');
+    overlay.className = 'zoom-overlay';
+    overlay.innerHTML = '<button class="zoom-cerrar" aria-label="Cerrar">✕</button><img src="" alt=""><div class="zoom-nombre"></div>';
+    document.body.appendChild(overlay);
+    const zoomImg = overlay.querySelector('img');
+    const zoomNombre = overlay.querySelector('.zoom-nombre');
+    const cerrarBtn = overlay.querySelector('.zoom-cerrar');
+
+    function cerrarZoom() { overlay.classList.remove('abierto'); zoomImg.src = ''; }
+    cerrarBtn.addEventListener('click', cerrarZoom);
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) cerrarZoom(); });
+
+    document.addEventListener('click', function(e) {
+      const foto = e.target.closest('.prod-foto');
+      if (!foto) return;
+      const img = foto.querySelector('img');
+      if (!img) return;
+      e.stopPropagation();
+      e.preventDefault();
+      // Usar imagen original (si es Google Drive, pedir alta resolución)
+      let src = img.src;
+      if (src.includes('googleusercontent')) src = src.replace(/=s\d+/, '=s1200');
+      zoomImg.src = src;
+      zoomImg.alt = img.alt || '';
+      zoomNombre.textContent = img.alt || '';
+      overlay.classList.add('abierto');
+    }, true);
+  }
 });

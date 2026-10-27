@@ -24,7 +24,7 @@
 <style>section[id],header[id]{scroll-margin-top:86px}
 
 /* ── Hero con foto de fondo ── */
-.hero--foto{position:relative;background:linear-gradient(135deg,rgba(27,33,38,.92),rgba(14,147,165,.15)),url('assets/img/local/interior.webp') center/cover no-repeat}
+.hero.hero--foto{position:relative;background:linear-gradient(135deg,rgba(27,33,38,.88),rgba(14,147,165,.12)),url('assets/img/local/interior.webp') center/cover no-repeat !important;min-height:520px}
 .hero--foto .arco{display:none}
 .hero--foto .lead{max-width:540px;color:rgba(255,255,255,.85)}
 .hero--foto .franja{backdrop-filter:blur(6px);background:rgba(27,33,38,.7)}
@@ -101,6 +101,9 @@
 .catpage-sub span{font-size:.78rem;font-weight:600;color:var(--c-texto,#e8ecef);display:block;line-height:1.2}
 .catpage-sub small{font-size:.7rem;color:var(--cian);font-weight:700}
 @media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:56px;height:56px}}
+
+.catpage--activa ~ section,.catpage--activa ~ .seccion-foto,.catpage--activa ~ .marcas{display:none}
+body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-foto{display:none}
 </style>
 <style>
 .ef-tab{display:none}
@@ -687,6 +690,7 @@
 </section>
 </div><!-- /ef-tab ubicacion-8 -->
 <!-- ======================= FOOTER ======================= -->
+<div id="catpage" class="catpage"></div>
 <footer class="footer" id="contacto">
   <div class="wrap">
     <div class="footer-grid">
@@ -1106,7 +1110,7 @@ function openCatPage(catName) {
 
   // Obtener subcategorías del catálogo
   const subs = {};
-  (window.PRODUCTOS || []).forEach(p => {
+  (window.EF_PRODUCTOS || []).forEach(p => {
     if (p.categoria === catName) {
       const s = p.subcategoria || 'Otros';
       subs[s] = (subs[s] || 0) + 1;
@@ -1142,14 +1146,9 @@ function openCatPage(catName) {
 
   // Mostrar/ocultar
   let cp = document.getElementById('catpage');
-  if (!cp) {
-    cp = document.createElement('div');
-    cp.id = 'catpage';
-    cp.className = 'catpage';
-    document.querySelector('.ef-tab[data-tab="catalogo"]').insertAdjacentElement('afterend', cp);
-  }
+  if (!cp) return;
   cp.innerHTML = pageHTML;
-  cp.classList.add('catpage--activa');
+  cp.classList.add('catpage--activa');document.body.classList.add('catpage-on');
 
   // Ocultar tabs normales
   document.querySelectorAll('.ef-tab').forEach(t => t.classList.remove('ef-tab--activa'));
@@ -1161,7 +1160,7 @@ function openCatPage(catName) {
 
 function closeCatPage() {
   const cp = document.getElementById('catpage');
-  if (cp) { cp.classList.remove('catpage--activa'); cp.style.display = 'none'; }
+  if (cp) { cp.classList.remove('catpage--activa'); cp.style.display = 'none'; }document.body.classList.remove('catpage-on');
   currentCat = null; currentSub = null;
   // Restaurar tab inicio
   document.querySelectorAll('.ef-tab').forEach(t => {
@@ -1182,7 +1181,7 @@ function filterCatSub(sub) {
 
 function renderCatGrid() {
   if (!currentCat) return;
-  const prods = (window.PRODUCTOS || []).filter(p => {
+  const prods = (window.EF_PRODUCTOS || []).filter(p => {
     if (p.categoria !== currentCat) return false;
     if (currentSub && p.subcategoria !== currentSub) return false;
     return true;
@@ -1209,6 +1208,18 @@ document.addEventListener('click', function(e) {
   }
 });
 
+
+// Conteo dinámico de productos por categoría
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    const prods = window.EF_PRODUCTOS || [];
+    document.querySelectorAll('[data-conteo]').forEach(el => {
+      const cat = el.getAttribute('data-conteo');
+      const cnt = prods.filter(p => p.categoria === cat).length;
+      el.textContent = cnt + ' producto' + (cnt !== 1 ? 's' : '');
+    });
+  }, 500);
+});
 </script>
 <!-- ── Botones flotantes ── -->
 <div class="flotantes" id="flotantes">

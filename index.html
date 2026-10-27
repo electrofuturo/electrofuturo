@@ -45,10 +45,10 @@
 @media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
 .efcat-card{background:var(--c-surface,#1e2a30);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0;cursor:pointer;text-align:center;transition:transform .2s,box-shadow .2s;overflow:hidden;display:flex;flex-direction:column}
 .efcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:var(--cat-clr)}
-.efcat-visual{background:linear-gradient(135deg,var(--cat-clr),color-mix(in srgb,var(--cat-clr) 60%,#000));padding:28px 16px 20px;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;position:relative}
-.efcat-visual::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E")}
-.efcat-icon{width:56px;height:56px;color:#fff;opacity:.9;position:relative;z-index:1}
-.efcat-icon svg{width:100%;height:100%}
+.efcat-visual{padding:0;aspect-ratio:4/3;position:relative;overflow:hidden}
+.efcat-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.efcat-card:hover .efcat-visual img{transform:scale(1.08)}
+.efcat-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 60%)}
 .efcat-info{padding:12px 10px 14px;display:flex;flex-direction:column;gap:4px}
 .efcat-info h3{font-size:.88rem;font-weight:600;color:var(--c-texto,#e8ecef);margin:0;line-height:1.2}
 .efcat-cnt{font-size:.75rem;color:var(--cat-clr);font-weight:700;opacity:.9}
@@ -104,6 +104,10 @@
 
 .catpage--activa ~ section,.catpage--activa ~ .seccion-foto,.catpage--activa ~ .marcas{display:none}
 body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-foto{display:none}
+
+#catpage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+@media(max-width:600px){#catpage-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+#catpage-grid img{width:100%;height:100%;object-fit:contain;padding:10px;background:#fff}
 </style>
 <style>
 .ef-tab{display:none}
@@ -166,7 +170,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
 </nav>
 <!-- ======================= HERO ======================= -->
 <div class="ef-tab ef-tab--activa" data-tab="inicio">
-<header class="hero hero--foto" id="top">
+<header class="hero hero--foto" id="top" style="background:linear-gradient(135deg,rgba(27,33,38,.88),rgba(14,147,165,.12)),url(assets/img/local/interior.webp) center/cover no-repeat">
   <div class="wrap">
     <div>
       <h1>El repuesto exacto,<br><span class="cian">a la primera.</span></h1>
@@ -212,8 +216,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
     </div>
     <div class="efcat-grid reveal">
       <button class="efcat-card" data-ir-cat="Cargadores y cables" style="--cat-clr:#0E93A5">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-cargadores_y_cables.webp" alt="Cargadores y cables" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Cargadores y Cables</h3>
@@ -221,8 +224,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Audífonos y parlantes" style="--cat-clr:#7C3AED">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 1 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-audifonos_y_parlantes.webp" alt="Audífonos y parlantes" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Audio</h3>
@@ -230,8 +232,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Accesorios" style="--cat-clr:#E97316">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.4-4 7l-1 1.5V20H10v-2.5L9 16c-2-1.6-4-4-4-7a7 7 0 0 1 7-7z"/><path d="M10 20h4v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-accesorios.webp" alt="Accesorios" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Accesorios</h3>
@@ -239,8 +240,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Pantallas" style="--cat-clr:#DC2626">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-pantallas.webp" alt="Pantallas" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Pantallas</h3>
@@ -248,8 +248,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Computación" style="--cat-clr:#2563EB">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-computacion.webp" alt="Computación" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Computación</h3>
@@ -257,8 +256,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Smartwatch" style="--cat-clr:#059669">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="16" rx="4"/><path d="M9 1h6M9 23h6"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-smartwatch.webp" alt="Smartwatch" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Smartwatch</h3>
@@ -266,8 +264,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Power bank y tomas" style="--cat-clr:#CA8A04">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="10" rx="3"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2M14 11v2"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-power_bank_y_tomas.webp" alt="Power bank y tomas" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Power Bank</h3>
@@ -275,8 +272,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
         </div>
       </button>
       <button class="efcat-card" data-ir-cat="Baterías" style="--cat-clr:#6D28D9">
-        <div class="efcat-visual">
-          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="18" rx="2"/><path d="M10 2h4"/><path d="M10 10h4M10 14h4"/></svg></div>
+        <div class="efcat-visual"><img src="assets/img/categorias/cat-baterias.webp" alt="Baterías" loading="lazy"></div>
         </div>
         <div class="efcat-info">
           <h3>Baterías</h3>
@@ -1192,7 +1188,10 @@ function renderCatGrid() {
   if (grid && typeof renderProductCards === 'function') {
     renderProductCards(grid, prods);
   } else if (grid) {
-    grid.innerHTML = prods.map(p => `<div class="prod-card"><div class="prod-img">${p.imagen ? '<img src="' + p.imagen + '" alt="' + (p.nombre||'') + '" loading="lazy">' : '<div class="prod-sin-img">📦</div>'}</div><div class="prod-info"><div class="prod-nombre">${p.nombre||''}</div><div class="prod-precio">${p.precio ? '$' + Number(p.precio).toLocaleString('es-CO') : ''}</div><div class="prod-sub tiny muted">${p.subcategoria||''}</div></div></div>`).join('') || '<div class="empty"><span class="em">📦</span><h4>Sin productos en esta subcategoría</h4></div>';
+    grid.innerHTML = prods.map(p => {
+      const img = p.imagen ? '<img src="' + p.imagen + '" alt="' + (p.nombre||'').replace(/"/g,'') + '" loading="lazy">' : '<div style="display:grid;place-items:center;height:100%;background:rgba(255,255,255,.04)"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-5 4 4 4-5 5 5"/></svg></div>';
+      return '<div class="card-prod" style="background:var(--c-surface,#1e2a30);border-radius:14px;overflow:hidden;cursor:pointer"><div style="aspect-ratio:1;overflow:hidden;background:#1a2228">' + img + '</div><div style="padding:12px"><div style="font-weight:600;font-size:.88rem;color:var(--c-texto,#e8ecef);line-height:1.3;margin-bottom:6px">' + (p.nombre||'') + '</div><div style="font-weight:700;color:var(--cian,#19C1D6);font-size:1rem">' + (p.precio ? '$' + Number(p.precio).toLocaleString('es-CO') : '<span style="color:rgba(255,255,255,.3)">Consultar</span>') + '</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px">' + (p.subcategoria||'') + (p.agotado ? ' · <span style=color:#ef4444>Agotado</span>' : '') + '</div></div></div>';
+    }).join('') || '<div class="empty"><span class="em">📦</span><h4>Sin productos en esta subcategoría</h4></div>';
   }
 }
 

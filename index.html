@@ -21,7 +21,87 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/estilos.css?v=16">
 <link rel="stylesheet" href="assets/css/chips-cat.css?v=16">
-<style>section[id],header[id]{scroll-margin-top:86px}</style>
+<style>section[id],header[id]{scroll-margin-top:86px}
+
+/* ── Hero con foto de fondo ── */
+.hero--foto{position:relative;background:linear-gradient(135deg,rgba(27,33,38,.92),rgba(14,147,165,.15)),url('assets/img/local/interior.webp') center/cover no-repeat}
+.hero--foto .arco{display:none}
+.hero--foto .lead{max-width:540px;color:rgba(255,255,255,.85)}
+.hero--foto .franja{backdrop-filter:blur(6px);background:rgba(27,33,38,.7)}
+.hero--foto .franja .franja-item{gap:6px;flex-direction:row;align-items:center}
+.hero--foto .franja .franja-item span:not(.ic){display:none}
+
+/* ── Tira de fotos ── */
+.seccion-foto{padding:0;overflow:hidden}
+.foto-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+@media(max-width:700px){.foto-strip{grid-template-columns:repeat(2,1fr)}}
+.foto-strip-item{aspect-ratio:3/4;overflow:hidden;position:relative}
+.foto-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.foto-strip-item:hover img{transform:scale(1.05)}
+
+/* ── Categorías estilo visual ── */
+.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+.efcat-card{background:var(--c-surface,#1e2a30);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0;cursor:pointer;text-align:center;transition:transform .2s,box-shadow .2s;overflow:hidden;display:flex;flex-direction:column}
+.efcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:var(--cat-clr)}
+.efcat-visual{background:linear-gradient(135deg,var(--cat-clr),color-mix(in srgb,var(--cat-clr) 60%,#000));padding:28px 16px 20px;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;position:relative}
+.efcat-visual::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E")}
+.efcat-icon{width:56px;height:56px;color:#fff;opacity:.9;position:relative;z-index:1}
+.efcat-icon svg{width:100%;height:100%}
+.efcat-info{padding:12px 10px 14px;display:flex;flex-direction:column;gap:4px}
+.efcat-info h3{font-size:.88rem;font-weight:600;color:var(--c-texto,#e8ecef);margin:0;line-height:1.2}
+.efcat-cnt{font-size:.75rem;color:var(--cat-clr);font-weight:700;opacity:.9}
+@media(max-width:600px){
+  .efcat-icon{width:40px;height:40px}
+  .efcat-info h3{font-size:.78rem}
+  .efcat-visual{padding:20px 12px 16px}
+}
+
+
+/* ── Galería fotos del local ── */
+.local-galeria{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 20px;border-radius:12px;overflow:hidden}
+@media(max-width:700px){.local-galeria{grid-template-columns:repeat(2,1fr)}}
+.local-foto{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:10px}
+.local-foto img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.local-foto:hover img{transform:scale(1.06)}
+.local-foto span{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:500}
+
+/* ── Redes sociales ── */
+.red-ico{color:rgba(255,255,255,.5);transition:color .2s}
+.red-ico:hover{color:var(--cian)}
+
+/* ── Botones flotantes ── */
+.flotantes{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:900}
+.flot{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:transform .2s}
+.flot:hover{transform:scale(1.1)}
+.flot-wa{background:#25D366;width:56px;height:56px}
+.flot-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);width:44px;height:44px}
+.flot-tt{background:#010101;width:44px;height:44px}
+
+/* ── Página de categoría (estilo BGA) ── */
+.catpage{display:none}
+.catpage.catpage--activa{display:block}
+.catpage-hero{position:relative;background:linear-gradient(135deg,rgba(27,33,38,.85),rgba(14,147,165,.2));padding:60px 0 40px;text-align:center;overflow:hidden;min-height:220px}
+.catpage-hero::before{content:'';position:absolute;inset:0;background:var(--cat-bg) center/cover no-repeat;opacity:.25;z-index:0}
+.catpage-hero>*{position:relative;z-index:1}
+.catpage-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:.85rem;padding:6px 16px;background:rgba(255,255,255,.1);border-radius:20px;border:1px solid rgba(255,255,255,.15);cursor:pointer;margin-bottom:18px;transition:background .2s}
+.catpage-back:hover{background:rgba(255,255,255,.2)}
+.catpage-hero h2{font-family:var(--disp);font-size:clamp(1.8rem,5vw,2.8rem);color:#fff;margin:0 0 8px}
+.catpage-hero p{color:rgba(255,255,255,.75);max-width:500px;margin:0 auto}
+
+/* Subcategorías con fotos */
+.catpage-subs{display:flex;gap:12px;overflow-x:auto;padding:20px 24px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.catpage-subs::-webkit-scrollbar{display:none}
+.catpage-sub{flex:0 0 auto;min-width:100px;max-width:140px;background:var(--c-surface,#1e2a30);border:2px solid transparent;border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:border-color .2s,transform .2s}
+.catpage-sub:hover,.catpage-sub.on{border-color:var(--cian);transform:translateY(-2px)}
+.catpage-sub-img{width:72px;height:72px;border-radius:10px;background:rgba(255,255,255,.06);margin:0 auto 8px;overflow:hidden;display:grid;place-items:center}
+.catpage-sub-img img{width:100%;height:100%;object-fit:cover}
+.catpage-sub-img svg{width:36px;height:36px;color:rgba(255,255,255,.3)}
+.catpage-sub span{font-size:.78rem;font-weight:600;color:var(--c-texto,#e8ecef);display:block;line-height:1.2}
+.catpage-sub small{font-size:.7rem;color:var(--cian);font-weight:700}
+@media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:56px;height:56px}}
+</style>
 <style>
 .ef-tab{display:none}
 .ef-tab.ef-tab--activa{display:block}
@@ -83,51 +163,32 @@
 </nav>
 <!-- ======================= HERO ======================= -->
 <div class="ef-tab ef-tab--activa" data-tab="inicio">
-<header class="hero" id="top">
+<header class="hero hero--foto" id="top">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Distribuidor mayorista · Ibagué, Colombia</p>
       <h1>El repuesto exacto,<br><span class="cian">a la primera.</span></h1>
       <p class="lead">
-        Atendemos <b>talleres, tiendas y técnicos independientes</b> con precio de mayorista.
-        Buscas el modelo, ves la foto y el precio, y armas el pedido en un mensaje.<br>
-        ⭐ Despacho el mismo día si tu pedido entra antes de las 3 p.m.
+        Distribuidor mayorista en Ibagué para talleres, tiendas y técnicos.<br>
+        Despacho el mismo día antes de las 3 p.m.
       </p>
       <div class="hero-buscar">
         <input type="search" id="buscar-hero" placeholder="Busca tu modelo: Redmi Note 13, batería iPhone 14…"
                aria-label="Buscar en el catálogo">
         <span class="ic">⌕</span>
       </div>
-      <div class="hero-cta" style="margin-top:22px">
-        <a href="#catalogo" class="btn btn-primario">Explorar el catálogo <span class="fl">→</span></a>
-        <a href="#tecnica" class="btn btn-linea">Soy técnico reparador</a>
+      <div class="hero-cta" style="margin-top:18px">
+        <a href="#catalogo" class="btn btn-primario">Explorar catálogo <span class="fl">→</span></a>
+        <a class="btn btn-linea" href="#" data-wa target="_blank" rel="noopener">Cotizar por WhatsApp</a>
       </div>
       <p class="estado-datos" id="estado-datos"><span class="punto"></span>Cargando catálogo…</p>
-    </div>
-    <div class="arco">
-      <span class="mockup-etiqueta e1"><span id="total-sku">213</span> referencias en línea</span>
-      <span class="mockup-etiqueta e2">Sin llamadas ni PDF desactualizado</span>
-      <div class="mockup" aria-hidden="true">
-        <div class="mockup-head">
-          <span class="pt"></span>
-          <b>Pedido #1042</b>
-          <span class="estado">Listo para enviar</span>
-        </div>
-        <div class="mockup-fila"><span>3× Pantalla Redmi Note 13</span><b>$150.000</b></div>
-        <div class="mockup-fila"><span>2× Batería iPhone 14</span><b>$150.000</b></div>
-        <div class="mockup-fila"><span>5× Cable HDMI 4K 1.5 m</span><b>$35.000</b></div>
-        <div class="mockup-fila"><span>Descuento por volumen · 10 %</span><b style="color:#7CF3AC">− $33.500</b></div>
-        <div class="mockup-total"><span style="color:rgba(255,255,255,.6);font-size:.82rem">Total estimado</span><span class="v">$301.500</span></div>
-        <div class="mockup-wa">Enviar por WhatsApp</div>
-      </div>
     </div>
   </div>
   <div class="franja">
     <div class="wrap">
-      <div class="franja-item"><span class="ic">✓</span><div><b>Calidad garantizada</b><span>Producto probado antes de despachar</span></div></div>
-      <div class="franja-item"><span class="ic">◈</span><div><b>Precio mayorista</b><span>5 % desde 5 unidades, 10 % desde 12</span></div></div>
-      <div class="franja-item"><span class="ic">☎</span><div><b>Asesoría técnica</b><span>Te confirmamos la referencia correcta</span></div></div>
-      <div class="franja-item"><span class="ic">➤</span><div><b>Envíos a todo el país</b><span>Despacho el mismo día antes de 3 p.m.</span></div></div>
+      <div class="franja-item"><span class="ic">✓</span><b>Garantía</b></div>
+      <div class="franja-item"><span class="ic">◈</span><b>Precio mayorista</b></div>
+      <div class="franja-item"><span class="ic">☎</span><b>Asesoría técnica</b></div>
+      <div class="franja-item"><span class="ic">➤</span><b>Envío nacional</b></div>
     </div>
   </div>
 </header>
@@ -135,78 +196,100 @@
 <div class="marcas" aria-label="Marcas que distribuimos">
   <div class="marcas-pista" id="marcas-pista"></div>
 </div>
-<!-- ======================= ACCESOS RÁPIDOS ======================= -->
-<section class="seccion nieve">
-  <div class="wrap">
-    <div class="seccion-head reveal" style="margin-bottom:26px">
-      <div>
-        <p class="eyebrow">Accesos rápidos</p>
-        <h2>¿Qué necesitas hacer hoy?</h2>
-      </div>
-    </div>
-    <div class="accesos reveal">
-      <button class="acceso" data-ir-q="">
-        <span class="ic">⌕</span>
-        <span><b>Buscar un repuesto</b><span>Por modelo de equipo o código</span></span>
-        <span class="fl">→</span>
-      </button>
-      <a class="acceso" href="#cotizador">
-        <span class="ic">◈</span>
-        <span><b>Cotizar en 3 pasos</b><span>Sin navegar todo el catálogo</span></span>
-        <span class="fl">→</span>
-      </a>
-      <button class="acceso" data-ir-cat="Pantallas">
-        <span class="ic">▭</span>
-        <span><b>Ver pantallas</b><span>7 marcas de celular</span></span>
-        <span class="fl">→</span>
-      </button>
-      <button class="acceso" data-ir-cat="Computación">
-        <span class="ic">⌨</span>
-        <span><b>Ver computación</b><span>Periféricos, cables y audio</span></span>
-        <span class="fl">→</span>
-      </button>
-      <a class="acceso" href="#lista-precios">
-        <span class="ic">🎁</span>
-        <span><b>Lista de precios</b><span>La recibes cada mes por WhatsApp</span></span>
-        <span class="fl">→</span>
-      </a>
-      <button class="acceso" data-abrir-ia>
-        <span class="ic">✦</span>
-        <span><b>Preguntarle al asesor</b><span>Precios, compatibilidad y stock</span></span>
-        <span class="fl">→</span>
-      </button>
-    </div>
-  </div>
-</section>
 <!-- ======================= CATEGORÍAS ======================= -->
 <section class="seccion" id="categorias">
   <div class="wrap">
     <div class="seccion-head reveal">
       <div>
-        <p class="eyebrow">Qué vendemos</p>
-        <h2>Tres líneas, un solo proveedor</h2>
-        <p>Toca una categoría y el catálogo de abajo se filtra solo, con las marcas disponibles para esa línea.</p>
+        <p class="eyebrow">Nuestro catálogo</p>
+        <h2>Explora por categoría</h2>
+        <p>Toca una categoría para ver todos sus productos en el catálogo.</p>
       </div>
       <button class="btn btn-linea btn-sm" data-ir-q="">Ver todo <span class="fl">→</span></button>
     </div>
-    <div class="cats reveal">
-      <button class="cat" data-ir-cat="Pantallas">
-        <div><span class="ic">▭</span><h3>Pantallas</h3><p>Xiaomi, Samsung, Motorola, iPhone, Honor/Huawei, Vivo/Oppo, Tecno/Infinix.</p></div>
-        <span class="cuenta" data-conteo="Pantallas">—</span>
+    <div class="efcat-grid reveal">
+      <button class="efcat-card" data-ir-cat="Cargadores y cables" style="--cat-clr:#0E93A5">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Cargadores y Cables</h3>
+          <span class="efcat-cnt" data-conteo="Cargadores y cables">—</span>
+        </div>
       </button>
-      <button class="cat" data-ir-cat="Baterías">
-        <div><span class="ic">▮</span><h3>Baterías</h3><p>Línea Mecánico y línea premium Ilummen para iPhone, genuinas y económicas.</p></div>
-        <span class="cuenta" data-conteo="Baterías">—</span>
+      <button class="efcat-card" data-ir-cat="Audífonos y parlantes" style="--cat-clr:#7C3AED">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 18v-6a9 9 0 1 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Audio</h3>
+          <span class="efcat-cnt" data-conteo="Audífonos y parlantes">—</span>
+        </div>
       </button>
-      <button class="cat" data-ir-cat="Computación">
-        <div><span class="ic">⌨</span><h3>Computación</h3><p>Teclados, mouse, hubs, cables HDMI y de red, conectividad, audio y micrófonos.</p></div>
-        <span class="cuenta" data-conteo="Computación">—</span>
+      <button class="efcat-card" data-ir-cat="Accesorios" style="--cat-clr:#E97316">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.4-4 7l-1 1.5V20H10v-2.5L9 16c-2-1.6-4-4-4-7a7 7 0 0 1 7-7z"/><path d="M10 20h4v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Accesorios</h3>
+          <span class="efcat-cnt" data-conteo="Accesorios">—</span>
+        </div>
       </button>
-      <button class="cat" data-ir-sub="Cables">
-        <div><span class="ic">⌁</span><h3>Cables y carga</h3><p>HDMI 4K y 8K, red Cat6/Cat7, poder, audio y extensiones por metraje.</p></div>
-        <span class="cuenta" data-conteo="Cables">—</span>
+      <button class="efcat-card" data-ir-cat="Pantallas" style="--cat-clr:#DC2626">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Pantallas</h3>
+          <span class="efcat-cnt" data-conteo="Pantallas">—</span>
+        </div>
+      </button>
+      <button class="efcat-card" data-ir-cat="Computación" style="--cat-clr:#2563EB">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Computación</h3>
+          <span class="efcat-cnt" data-conteo="Computación">—</span>
+        </div>
+      </button>
+      <button class="efcat-card" data-ir-cat="Smartwatch" style="--cat-clr:#059669">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="16" rx="4"/><path d="M9 1h6M9 23h6"/><circle cx="12" cy="12" r="3"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Smartwatch</h3>
+          <span class="efcat-cnt" data-conteo="Smartwatch">—</span>
+        </div>
+      </button>
+      <button class="efcat-card" data-ir-cat="Power bank y tomas" style="--cat-clr:#CA8A04">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="10" rx="3"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2M14 11v2"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Power Bank</h3>
+          <span class="efcat-cnt" data-conteo="Power bank y tomas">—</span>
+        </div>
+      </button>
+      <button class="efcat-card" data-ir-cat="Baterías" style="--cat-clr:#6D28D9">
+        <div class="efcat-visual">
+          <div class="efcat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="4" width="12" height="18" rx="2"/><path d="M10 2h4"/><path d="M10 10h4M10 14h4"/></svg></div>
+        </div>
+        <div class="efcat-info">
+          <h3>Baterías</h3>
+          <span class="efcat-cnt" data-conteo="Baterías">—</span>
+        </div>
       </button>
     </div>
+  </div>
+</section>
+<!-- ======================= BANNER LOCAL ======================= -->
+<section class="seccion-foto reveal">
+  <div class="foto-strip">
+    <div class="foto-strip-item"><img src="assets/img/local/fachada.webp" alt="Fachada Electrofuturo" loading="lazy"></div>
+    <div class="foto-strip-item"><img src="assets/img/local/entrada.webp" alt="Entrada Electrofuturo" loading="lazy"></div>
+    <div class="foto-strip-item"><img src="assets/img/local/equipo.webp" alt="Equipo Electrofuturo" loading="lazy"></div>
+    <div class="foto-strip-item"><img src="assets/img/local/interior.webp" alt="Interior Electrofuturo" loading="lazy"></div>
   </div>
 </section>
 <!-- ======================= DESTACADOS ======================= -->
@@ -362,63 +445,30 @@
   <div class="wrap">
     <div class="seccion-head reveal">
       <div>
-        <p class="eyebrow">Paso a paso</p>
-        <h2>Cómo funciona tu pedido</h2>
-        <p>De la búsqueda al despacho, sin llamadas para confirmar precios.</p>
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>Tres pasos, cero llamadas</h2>
       </div>
     </div>
     <div class="proceso reveal">
       <div class="p">
         <div class="n">01</div>
         <h4>Arma tu lista</h4>
-        <p>Busca por modelo o código, agrega lo que necesitas y el carrito calcula el descuento por volumen automáticamente.</p>
+        <p>Busca por modelo, agrega al carrito. El descuento por volumen se aplica solo.</p>
       </div>
       <div class="p">
         <div class="n">02</div>
         <h4>Envía por WhatsApp</h4>
-        <p>Completas nombre, ciudad y forma de entrega. El pedido llega con códigos, cantidades y total ya escritos.</p>
+        <p>Tu pedido llega con códigos, cantidades y total ya escrito.</p>
       </div>
       <div class="p">
         <div class="n">03</div>
-        <h4>Confirmamos y despachamos</h4>
-        <p>Verificamos disponibilidad, te damos el valor del envío y despachamos el mismo día si es antes de las 3 p.m.</p>
-      </div>
-    </div>
-    <div class="cifras reveal" style="margin-top:44px">
-      <div class="c">
-        <div class="n" data-contar="213">0</div>
-        <div class="e">Referencias en línea</div>
-      </div>
-      <div class="c">
-        <div class="n" data-contar="26">0</div>
-        <div class="e">Marcas distribuidas</div>
-      </div>
-      <div class="c">
-        <div class="n"><em>3</em> p.m.</div>
-        <div class="e">Corte de despacho diario</div>
-      </div>
-      <div class="c">
-        <div class="n"><em>10</em> %</div>
-        <div class="e">Descuento desde 12 unidades</div>
+        <h4>Despachamos hoy</h4>
+        <p>Confirmamos stock y enviamos el mismo día si entra antes de las 3 p.m.</p>
       </div>
     </div>
   </div>
 </section>
-<!-- ======================= DIFERENCIALES ======================= -->
-<section class="seccion">
-  <div class="wrap">
-    <div class="panel reveal">
-      <p class="eyebrow claro">Por qué comprarnos</p>
-      <h2>Construido para quien revende y para quien repara</h2>
-      <div class="panel-grid">
-        <div class="it"><div class="ic">◎</div><h4>Referencia verificada</h4><p>Cada pantalla indica el tipo de módulo (SM, CM, AMP, OLED) para que no compres a ciegas.</p></div>
-        <div class="it"><div class="ic">⇄</div><h4>Reposición semanal</h4><p>El catálogo marca lo agotado en tiempo real, no cuando ya hiciste el pedido.</p></div>
-        <div class="it"><div class="ic">⌾</div><h4>Precio por volumen</h4><p>5 % de descuento desde 5 unidades y 10 % desde 12, aplicado automáticamente.</p></div>
-        <div class="it"><div class="ic">✉</div><h4>Pedido en un mensaje</h4><p>Armas la lista aquí y llega a nuestro WhatsApp con códigos, cantidades y total.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+
 </div><!-- /ef-tab inicio-3 -->
 <div class="ef-tab" data-tab="tecnica">
 <!-- ======================= LÍNEA TÉCNICA ======================= -->
@@ -559,18 +609,12 @@
         <summary>¿Qué garantía tienen los repuestos?</summary>
         <div class="cuerpo">Las pantallas y baterías se prueban antes de despachar. Si una llega con falla de fábrica, la cambiamos. La garantía no cubre daño por instalación, golpe o humedad posterior a la entrega, así que revisa el módulo antes de montarlo.</div>
       </details>
-      <details class="faq-item">
-        <summary>¿Los precios de la web están actualizados?</summary>
-        <div class="cuerpo">Sí. El catálogo se actualiza directamente sobre la base de datos, no sobre un PDF. Lo que aparece marcado como agotado es porque hoy no lo tenemos en bodega. Aun así confirmamos disponibilidad al recibir el pedido, porque el inventario se mueve durante el día.</div>
-      </details>
+
       <details class="faq-item">
         <summary>¿Puedo pagar contra entrega?</summary>
         <div class="cuerpo">Para clientes nuevos trabajamos con pago anticipado por transferencia. Cuando ya hay historial de pedidos podemos manejar contra entrega o plazo, según el volumen. Lo conversamos por WhatsApp.</div>
       </details>
-      <details class="faq-item">
-        <summary>¿Venden al público o solo a mayoristas?</summary>
-        <div class="cuerpo">Vendemos a ambos. El precio publicado es el mismo; lo que cambia es el descuento por volumen, que aplica automáticamente según las unidades del pedido.</div>
-      </details>
+
     </div>
     <div class="faq-cta reveal">
       <h4>¿No encontraste tu respuesta? 🤔</h4>
@@ -594,11 +638,18 @@
         <p>Puedes recoger tu pedido en tienda o pedir despacho a cualquier ciudad del país.</p>
       </div>
     </div>
+    <div class="local-hero reveal" style="margin:20px 0;border-radius:14px;overflow:hidden;max-height:320px">
+      <img src="assets/img/local/equipo.webp" alt="Nuestro equipo en Electrofuturo" loading="lazy" style="width:100%;height:320px;object-fit:cover;object-position:center 30%">
+    </div>
     <div class="ubicacion reveal">
       <div class="ubic-datos">
         <div class="ubic-card">
           <h5>Pedidos y asesoría</h5>
-          <div class="dato">313 413 5751</div>
+          <div class="dato">313 215 7690</div>
+          <p>Asesora comercial — cotizaciones y pedidos.</p>
+          <a class="enl" href="https://wa.me/573132157690?text=Hola%2C%20quiero%20información%20sobre%20productos%20de%20Electrofuturo" target="_blank" rel="noopener">Escribir por WhatsApp →</a>
+          <div class="dato" style="margin-top:10px;font-size:.88rem">313 255 4289</div>
+          <p>Gerencia general.</p>
           <p>Te confirmamos disponibilidad y valor de envío al momento.</p>
           <a class="enl" href="#" data-wa target="_blank" rel="noopener">Escribir por WhatsApp →</a>
         </div>
@@ -614,6 +665,7 @@
           <a class="enl" href="https://www.google.com/maps/dir//Edificio+Belvedere,+Cra.+6+%2318-49,+Ibagu%C3%A9,+Tolima/@4.4418993,-75.2128882,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x8e38c48e32a963fb:0xba5383d384cbc766!2m2!1d-75.2335501!2d4.4430875" target="_blank" rel="noopener">Cómo llegar en Google Maps →</a>
         </div>
       </div>
+            </div>
       <div class="mapa">
         <iframe src="https://maps.google.com/maps?q=4.4430875,-75.2335501&amp;z=17&amp;output=embed" width="100%" height="100%" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Electro Futuro"></iframe>
       </div>
@@ -641,6 +693,12 @@
       <div>
         <div class="logo oscuro" style="margin-bottom:16px">
           <img src="assets/img/marca/logo-footer.webp" alt="Electrofuturo" style="height:26px">
+        
+        <div class="redes" style="display:flex;gap:12px;margin-top:14px">
+          <a href="https://www.instagram.com/electrofuturo_/" target="_blank" rel="noopener" title="Instagram" class="red-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="https://www.facebook.com/electrofuturocolombia?locale=es_LA" target="_blank" rel="noopener" title="Facebook" class="red-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="https://www.tiktok.com/@electrofuturocolombia" target="_blank" rel="noopener" title="TikTok" class="red-ico"><svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+        </div>
         </div>
         <p style="max-width:34ch;margin:0">Distribución de accesorios, repuestos y computación.
         Cra. 6 #18-49, Local 3 · Ibagué, Tolima — con envíos a toda Colombia.</p>
@@ -1035,6 +1093,130 @@
   window.EF_TABS_ACTIVO=true;
   fromHash();
 })();
+
+/* ── Sistema de páginas por categoría (estilo BGA) ── */
+const CAT_META = {"Cargadores y cables": {"desc": "Cubos, cables de datos, cargadores de carro y adaptadores de carga rápida.", "color": "#0E93A5"}, "Audífonos y parlantes": {"desc": "Audífonos inalámbricos, diademas, parlantes Bluetooth y más.", "color": "#7C3AED"}, "Accesorios": {"desc": "Fundas, soportes, trípodes, iluminación y gadgets para el día a día.", "color": "#E97316"}, "Pantallas": {"desc": "Módulos SM, CM, INCELL, OLED y AMOLED para reparación técnica.", "color": "#DC2626"}, "Computación": {"desc": "Mouse, teclados, hubs USB, cables HDMI, micrófonos y periféricos.", "color": "#2563EB"}, "Smartwatch": {"desc": "Relojes inteligentes con monitor de salud, notificaciones y GPS.", "color": "#059669"}, "Power bank y tomas": {"desc": "Baterías portátiles, power banks inalámbricos y tomacorrientes.", "color": "#CA8A04"}, "Baterías": {"desc": "Baterías de reemplazo para iPhone, línea Mecánico e Ilummen.", "color": "#6D28D9"}};
+
+let currentCat = null, currentSub = null;
+
+function openCatPage(catName) {
+  currentCat = catName;
+  currentSub = null;
+  const meta = CAT_META[catName] || {desc: '', color: '#0E93A5'};
+
+  // Obtener subcategorías del catálogo
+  const subs = {};
+  (window.PRODUCTOS || []).forEach(p => {
+    if (p.categoria === catName) {
+      const s = p.subcategoria || 'Otros';
+      subs[s] = (subs[s] || 0) + 1;
+    }
+  });
+  const total = Object.values(subs).reduce((a, v) => a + v, 0);
+
+  // Construir página
+  const catSlug = catName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
+  const bannerPath = 'assets/img/categorias/cat-' + catSlug + '.webp';
+  const placeholder = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v4m0 4h.01"/></svg>';
+
+  let subsHTML = `<button class="catpage-sub on" onclick="filterCatSub(null)"><div class="catpage-sub-img" style="background:${meta.color}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><span>Todo</span><small>${total}</small></button>`;
+
+  Object.keys(subs).sort().forEach(sub => {
+    const subSlug = sub.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s\/]+/g,'_').replace(/[^a-z0-9_]/g,'');
+    const subImg = 'assets/img/categorias/sub-' + subSlug + '.webp';
+    subsHTML += `<button class="catpage-sub" data-sub="${sub}" onclick="filterCatSub('${sub.replace(/'/g,"\\'")}')"><div class="catpage-sub-img"><img src="${subImg}" alt="${sub}" onerror="this.replaceWith(Object.assign(document.createElementNS('http://www.w3.org/2000/svg','svg'),{innerHTML:'<rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'3\'/><path d=\'M12 8v4m0 4h.01\'/>'}).setAttribute('viewBox','0 0 24 24')||this.parentNode.innerHTML='${placeholder}')"></div><span>${sub}</span><small>${subs[sub]}</small></button>`;
+  });
+
+  const pageHTML = `<div class="catpage-hero" style="--cat-bg:url('${bannerPath}')">
+    <div class="wrap">
+      <button class="catpage-back" onclick="closeCatPage()">‹ Todas las categorías</button>
+      <h2>${catName}</h2>
+      <p>${meta.desc}</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="catpage-subs">${subsHTML}</div>
+    <div class="resultados-bar" style="margin:14px 0 8px"><span class="conteo" id="catpage-conteo">${total} productos</span></div>
+    <div class="grid-catalogo" id="catpage-grid"></div>
+  </div>`;
+
+  // Mostrar/ocultar
+  let cp = document.getElementById('catpage');
+  if (!cp) {
+    cp = document.createElement('div');
+    cp.id = 'catpage';
+    cp.className = 'catpage';
+    document.querySelector('.ef-tab[data-tab="catalogo"]').insertAdjacentElement('afterend', cp);
+  }
+  cp.innerHTML = pageHTML;
+  cp.classList.add('catpage--activa');
+
+  // Ocultar tabs normales
+  document.querySelectorAll('.ef-tab').forEach(t => t.classList.remove('ef-tab--activa'));
+  cp.style.display = 'block';
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  renderCatGrid();
+}
+
+function closeCatPage() {
+  const cp = document.getElementById('catpage');
+  if (cp) { cp.classList.remove('catpage--activa'); cp.style.display = 'none'; }
+  currentCat = null; currentSub = null;
+  // Restaurar tab inicio
+  document.querySelectorAll('.ef-tab').forEach(t => {
+    t.classList.toggle('ef-tab--activa', t.dataset.tab === 'inicio');
+  });
+  document.querySelectorAll('.pill-nav').forEach(p => {
+    p.classList.toggle('activa', (p.getAttribute('href')||'').includes('inicio') || p.dataset.sec === 'inicio');
+  });
+}
+
+function filterCatSub(sub) {
+  currentSub = sub;
+  document.querySelectorAll('.catpage-sub').forEach(b => {
+    b.classList.toggle('on', sub ? b.dataset.sub === sub : !b.dataset.sub);
+  });
+  renderCatGrid();
+}
+
+function renderCatGrid() {
+  if (!currentCat) return;
+  const prods = (window.PRODUCTOS || []).filter(p => {
+    if (p.categoria !== currentCat) return false;
+    if (currentSub && p.subcategoria !== currentSub) return false;
+    return true;
+  });
+  const grid = document.getElementById('catpage-grid');
+  const cnt = document.getElementById('catpage-conteo');
+  if (cnt) cnt.textContent = prods.length + ' producto' + (prods.length !== 1 ? 's' : '');
+  if (grid && typeof renderProductCards === 'function') {
+    renderProductCards(grid, prods);
+  } else if (grid) {
+    grid.innerHTML = prods.map(p => `<div class="prod-card"><div class="prod-img">${p.imagen ? '<img src="' + p.imagen + '" alt="' + (p.nombre||'') + '" loading="lazy">' : '<div class="prod-sin-img">📦</div>'}</div><div class="prod-info"><div class="prod-nombre">${p.nombre||''}</div><div class="prod-precio">${p.precio ? '$' + Number(p.precio).toLocaleString('es-CO') : ''}</div><div class="prod-sub tiny muted">${p.subcategoria||''}</div></div></div>`).join('') || '<div class="empty"><span class="em">📦</span><h4>Sin productos en esta subcategoría</h4></div>';
+  }
+}
+
+// Interceptar clicks de categorías para abrir catpage
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-ir-cat]');
+  if (!btn) return;
+  const cat = btn.getAttribute('data-ir-cat');
+  if (cat && CAT_META[cat]) {
+    e.preventDefault();
+    e.stopPropagation();
+    openCatPage(cat);
+  }
+});
+
 </script>
+<!-- ── Botones flotantes ── -->
+<div class="flotantes" id="flotantes">
+  <a href="https://wa.me/573132157690?text=Hola%2C%20quiero%20información%20sobre%20productos%20de%20Electrofuturo" target="_blank" rel="noopener" class="flot flot-wa" title="WhatsApp Asesora comercial">
+    <svg viewBox="0 0 24 24" fill="#fff" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+  <a href="https://www.instagram.com/electrofuturo_/" target="_blank" rel="noopener" class="flot flot-ig" title="Instagram"><svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+  <a href="https://www.tiktok.com/@electrofuturocolombia" target="_blank" rel="noopener" class="flot flot-tt" title="TikTok"><svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+</div>
 </body>
 </html>

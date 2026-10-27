@@ -158,9 +158,9 @@
   // app.js define cardProducto como function, no como window.cardProducto
   // Hay que exponerla. Lo hacemos esperando a que app.js cargue.
 
-  // Interceptar clicks en las cards de categoría del homepage
+  // Interceptar clicks en cards de categoría (homepage) Y chips del catálogo
   document.addEventListener('click', function (e) {
-    // Cards del homepage
+    // Cards del homepage (data-ir-cat)
     var btn = e.target.closest('[data-ir-cat]');
     if (btn) {
       var cat = btn.getAttribute('data-ir-cat');
@@ -171,7 +171,18 @@
         return;
       }
     }
-  });
+    // Chips del catálogo (data-cat-chip) — excepto "Todo" que es vacío
+    var chip = e.target.closest('[data-cat-chip]');
+    if (chip) {
+      var cat = chip.getAttribute('data-cat-chip');
+      if (cat && CAT_META[cat]) {
+        e.preventDefault();
+        e.stopPropagation();
+        openCatPage(cat);
+        return;
+      }
+    }
+  }, true);  // useCapture=true para interceptar ANTES que chips-cat.js
 
   // Exponer para que chips-cat.js pueda usarlo
   window.openCatPage = openCatPage;

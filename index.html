@@ -102,8 +102,6 @@
 .catpage-sub small{font-size:.7rem;color:var(--cian);font-weight:700}
 @media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:56px;height:56px}}
 
-.catpage--activa ~ section,.catpage--activa ~ .seccion-foto,.catpage--activa ~ .marcas{display:none}
-body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-foto{display:none}
 
 #catpage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 @media(max-width:600px){#catpage-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
@@ -314,6 +312,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
   </div>
 </section>
 </div><!-- /ef-tab inicio-0 -->
+<div id="catpage" class="catpage"></div>
 <div class="ef-tab" data-tab="catalogo">
 <!-- ======================= CATÁLOGO ======================= -->
 <section class="cat-header" id="catalogo">
@@ -694,7 +693,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
 </section>
 <!-- /ef-tab ubicacion-8 -->
 <!-- ======================= FOOTER ======================= -->
-<div id="catpage" class="catpage"></div>
+
 <footer class="footer" id="contacto">
   <div class="wrap">
     <div class="footer-grid">
@@ -1060,6 +1059,7 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
 <script src="assets/js/app.js?v=16"></script>
 <script src="assets/js/extras.js?v=16"></script>
 <script src="assets/js/chips-cat.js?v=16"></script>
+<script src="assets/js/catpage.js?v=1"></script>
 <script src="assets/js/asistente-ia.js?v=16" defer></script>
 <script>
 (function(){
@@ -1103,129 +1103,8 @@ body.catpage-on .marcas,body.catpage-on #categorias,body.catpage-on .seccion-fot
 })();
 
 /* ── Sistema de páginas por categoría (estilo BGA) ── */
-const CAT_META = {"Cargadores y cables": {"desc": "Cubos, cables de datos, cargadores de carro y adaptadores de carga rápida.", "color": "#0E93A5"}, "Audífonos y parlantes": {"desc": "Audífonos inalámbricos, diademas, parlantes Bluetooth y más.", "color": "#7C3AED"}, "Accesorios": {"desc": "Fundas, soportes, trípodes, iluminación y gadgets para el día a día.", "color": "#E97316"}, "Pantallas": {"desc": "Módulos SM, CM, INCELL, OLED y AMOLED para reparación técnica.", "color": "#DC2626"}, "Computación": {"desc": "Mouse, teclados, hubs USB, cables HDMI, micrófonos y periféricos.", "color": "#2563EB"}, "Smartwatch": {"desc": "Relojes inteligentes con monitor de salud, notificaciones y GPS.", "color": "#059669"}, "Power bank y tomas": {"desc": "Baterías portátiles, power banks inalámbricos y tomacorrientes.", "color": "#CA8A04"}, "Baterías": {"desc": "Baterías de reemplazo para iPhone, línea Mecánico e Ilummen.", "color": "#6D28D9"}};
 
-let currentCat = null, currentSub = null;
-
-function openCatPage(catName) {
-  currentCat = catName;
-  currentSub = null;
-  const meta = CAT_META[catName] || {desc: '', color: '#0E93A5'};
-
-  // Obtener subcategorías del catálogo
-  const subs = {};
-  (window.EF_PRODUCTOS || []).forEach(p => {
-    if (p.categoria === catName) {
-      const s = p.subcategoria || 'Otros';
-      subs[s] = (subs[s] || 0) + 1;
-    }
-  });
-  const total = Object.values(subs).reduce((a, v) => a + v, 0);
-
-  // Construir página
-  const catSlug = catName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,'');
-  const bannerPath = 'assets/img/categorias/cat-' + catSlug + '.webp';
-  const placeholder = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v4m0 4h.01"/></svg>';
-
-  let subsHTML = `<button class="catpage-sub on" onclick="filterCatSub(null)"><div class="catpage-sub-img" style="background:${meta.color}"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><span>Todo</span><small>${total}</small></button>`;
-
-  Object.keys(subs).sort().forEach(sub => {
-    const subSlug = sub.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[\s\/]+/g,'_').replace(/[^a-z0-9_]/g,'');
-    const subImg = 'assets/img/categorias/sub-' + subSlug + '.webp';
-    subsHTML += `<button class="catpage-sub" data-sub="${sub}" onclick="filterCatSub('${sub.replace(/'/g,"\\'")}')"><div class="catpage-sub-img"><img src="${subImg}" alt="${sub}" onerror="this.replaceWith(Object.assign(document.createElementNS('http://www.w3.org/2000/svg','svg'),{innerHTML:'<rect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'3\'/><path d=\'M12 8v4m0 4h.01\'/>'}).setAttribute('viewBox','0 0 24 24')||this.parentNode.innerHTML='${placeholder}')"></div><span>${sub}</span><small>${subs[sub]}</small></button>`;
-  });
-
-  const pageHTML = `<div class="catpage-hero" style="--cat-bg:url('${bannerPath}')">
-    <div class="wrap">
-      <button class="catpage-back" onclick="closeCatPage()">‹ Todas las categorías</button>
-      <h2>${catName}</h2>
-      <p>${meta.desc}</p>
-    </div>
-  </div>
-  <div class="wrap">
-    <div class="catpage-subs">${subsHTML}</div>
-    <div class="resultados-bar" style="margin:14px 0 8px"><span class="conteo" id="catpage-conteo">${total} productos</span></div>
-    <div class="grid-catalogo" id="catpage-grid"></div>
-  </div>`;
-
-  // Mostrar/ocultar
-  let cp = document.getElementById('catpage');
-  if (!cp) return;
-  cp.innerHTML = pageHTML;
-  cp.classList.add('catpage--activa');document.body.classList.add('catpage-on');
-
-  // Ocultar tabs normales
-  document.querySelectorAll('.ef-tab').forEach(t => t.classList.remove('ef-tab--activa'));
-  cp.style.display = 'block';
-
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  renderCatGrid();
-}
-
-function closeCatPage() {
-  const cp = document.getElementById('catpage');
-  if (cp) { cp.classList.remove('catpage--activa'); cp.style.display = 'none'; }document.body.classList.remove('catpage-on');
-  currentCat = null; currentSub = null;
-  // Restaurar tab inicio
-  document.querySelectorAll('.ef-tab').forEach(t => {
-    t.classList.toggle('ef-tab--activa', t.dataset.tab === 'inicio');
-  });
-  document.querySelectorAll('.pill-nav').forEach(p => {
-    p.classList.toggle('activa', (p.getAttribute('href')||'').includes('inicio') || p.dataset.sec === 'inicio');
-  });
-}
-
-function filterCatSub(sub) {
-  currentSub = sub;
-  document.querySelectorAll('.catpage-sub').forEach(b => {
-    b.classList.toggle('on', sub ? b.dataset.sub === sub : !b.dataset.sub);
-  });
-  renderCatGrid();
-}
-
-function renderCatGrid() {
-  if (!currentCat) return;
-  const prods = (window.EF_PRODUCTOS || []).filter(p => {
-    if (p.categoria !== currentCat) return false;
-    if (currentSub && p.subcategoria !== currentSub) return false;
-    return true;
-  });
-  const grid = document.getElementById('catpage-grid');
-  const cnt = document.getElementById('catpage-conteo');
-  if (cnt) cnt.textContent = prods.length + ' producto' + (prods.length !== 1 ? 's' : '');
-  if (grid && typeof renderProductCards === 'function') {
-    renderProductCards(grid, prods);
-  } else if (grid) {
-    grid.innerHTML = prods.map(p => {
-      const img = p.imagen ? '<img src="' + p.imagen + '" alt="' + (p.nombre||'').replace(/"/g,'') + '" loading="lazy">' : '<div style="display:grid;place-items:center;height:100%;background:rgba(255,255,255,.04)"><svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 16l5-5 4 4 4-5 5 5"/></svg></div>';
-      return '<div class="card-prod" style="background:var(--c-surface,#1e2a30);border-radius:14px;overflow:hidden;cursor:pointer"><div style="aspect-ratio:1;overflow:hidden;background:#1a2228">' + img + '</div><div style="padding:12px"><div style="font-weight:600;font-size:.88rem;color:var(--c-texto,#e8ecef);line-height:1.3;margin-bottom:6px">' + (p.nombre||'') + '</div><div style="font-weight:700;color:var(--cian,#19C1D6);font-size:1rem">' + (p.precio ? '$' + Number(p.precio).toLocaleString('es-CO') : '<span style="color:rgba(255,255,255,.3)">Consultar</span>') + '</div><div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:4px">' + (p.subcategoria||'') + (p.agotado ? ' · <span style=color:#ef4444>Agotado</span>' : '') + '</div></div></div>';
-    }).join('') || '<div class="empty"><span class="em">📦</span><h4>Sin productos en esta subcategoría</h4></div>';
-  }
-}
-
-// Interceptar clicks de categorías para abrir catpage
-document.addEventListener('click', function(e) {
-  const btn = e.target.closest('[data-ir-cat]');
-  if (!btn) return;
-  const cat = btn.getAttribute('data-ir-cat');
-  if (cat && CAT_META[cat]) {
-    e.preventDefault();
-    e.stopPropagation();
-    openCatPage(cat);
-  }
-});
-
-
-// Conteo dinámico de productos por categoría
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() {
-    const prods = window.EF_PRODUCTOS || [];
-    document.querySelectorAll('[data-conteo]').forEach(el => {
-      const cat = el.getAttribute('data-conteo');
-      const cnt = prods.filter(p => p.categoria === cat).length;
-      el.textContent = cnt + ' producto' + (cnt !== 1 ? 's' : '');
-    });
-  }, 500);
+ }, 500);
 });
 </script>
 <!-- ── Botones flotantes ── -->

@@ -127,6 +127,7 @@ function fichaTecnica(p) {
       <span class="sello">${sello}</span>
     </div>`;
 }
+window.cardProducto = cardProducto;
 function cardProducto(p) {
   const visual = p.imagen
     ? `<div class="prod-foto" data-ver="${p.sku}" role="button" tabindex="0"

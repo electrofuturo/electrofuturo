@@ -23,22 +23,7 @@
 <link rel="stylesheet" href="assets/css/chips-cat.css?v=16">
 <style>section[id],header[id]{scroll-margin-top:86px}
 /* ── Categorías estilo visual ── */
-.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
-@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
-.efcat-card{background:var(--c-surface,#1e2a30);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0;cursor:pointer;text-align:center;transition:transform .2s,box-shadow .2s;overflow:hidden;display:flex;flex-direction:column}
-.efcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:var(--cat-clr)}
-.efcat-visual{background:linear-gradient(135deg,var(--cat-clr),color-mix(in srgb,var(--cat-clr) 60%,#000));padding:28px 16px 20px;display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;position:relative}
-.efcat-visual::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E")}
-.efcat-icon{width:56px;height:56px;color:#fff;opacity:.9;position:relative;z-index:1}
-.efcat-icon svg{width:100%;height:100%}
-.efcat-info{padding:12px 10px 14px;display:flex;flex-direction:column;gap:4px}
-.efcat-info h3{font-size:.88rem;font-weight:600;color:var(--c-texto,#e8ecef);margin:0;line-height:1.2}
-.efcat-cnt{font-size:.75rem;color:var(--cat-clr);font-weight:700;opacity:.9}
 @media(max-width:600px){
-  .efcat-icon{width:40px;height:40px}
-  .efcat-info h3{font-size:.78rem}
-  .efcat-visual{padding:20px 12px 16px}
 }
 
 
@@ -58,18 +43,6 @@
 .hero--foto .lead{max-width:540px;color:rgba(255,255,255,.85)}
 
 /* Categorías con fotos */
-.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
-@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
-.efcat-card{background:var(--c-surface,#1e2a30);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:0;cursor:pointer;text-align:center;transition:transform .2s,box-shadow .2s;overflow:hidden;display:flex;flex-direction:column}
-.efcat-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.3);border-color:var(--cat-clr)}
-.efcat-visual{aspect-ratio:4/3;overflow:hidden;position:relative}
-.efcat-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.efcat-card:hover .efcat-visual img{transform:scale(1.08)}
-.efcat-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 60%)}
-.efcat-info{padding:12px 10px 14px;display:flex;flex-direction:column;gap:4px}
-.efcat-info h3{font-size:.88rem;font-weight:600;color:var(--c-texto,#e8ecef);margin:0;line-height:1.2}
-.efcat-cnt{font-size:.75rem;color:var(--cat-clr);font-weight:700}
 
 /* Tira de fotos del local */
 .seccion-foto{padding:0;overflow:hidden}
@@ -100,16 +73,49 @@
 .catpage-back:hover{background:rgba(255,255,255,.2)}
 .catpage-hero h2{font-family:var(--disp);font-size:clamp(1.8rem,5vw,2.8rem);color:#fff;margin:0 0 8px}
 .catpage-hero p{color:rgba(255,255,255,.75);max-width:500px;margin:0 auto}
-.catpage-subs{display:flex;gap:12px;overflow-x:auto;padding:20px 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.catpage-subs::-webkit-scrollbar{display:none}
-.catpage-sub{flex:0 0 auto;min-width:100px;max-width:140px;background:var(--c-surface,#1e2a30);border:2px solid transparent;border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:border-color .2s,transform .2s}
-.catpage-sub:hover,.catpage-sub.on{border-color:var(--cian,#19C1D6);transform:translateY(-2px)}
-.catpage-sub-img{width:72px;height:72px;border-radius:10px;background:rgba(255,255,255,.06);margin:0 auto 8px;overflow:hidden;display:grid;place-items:center}
-.catpage-sub-img img{width:100%;height:100%;object-fit:cover}
-.catpage-sub span{font-size:.78rem;font-weight:600;color:var(--c-texto,#e8ecef);display:block;line-height:1.2}
-.catpage-sub small{font-size:.7rem;color:var(--cian,#19C1D6);font-weight:700}
-@media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:56px;height:56px}}
 
+
+/* ══════ CATEGORÍAS HOMEPAGE ══════ */
+.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+
+.efcat-card{background:#fff;border:none;border-radius:18px;padding:0;cursor:pointer;text-align:center;transition:transform .25s,box-shadow .25s;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.efcat-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+
+.efcat-visual{aspect-ratio:4/3;overflow:hidden;position:relative;background:#f5f7f8}
+.efcat-visual img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .35s}
+.efcat-card:hover .efcat-visual img{transform:scale(1.04)}
+
+.efcat-info{padding:14px 12px 16px;background:#fff}
+.efcat-info h3{font-size:.9rem;font-weight:700;color:#1B2126;margin:0;line-height:1.2}
+.efcat-cnt{font-size:.78rem;color:#0E93A5;font-weight:600;margin-top:3px;display:block}
+@media(max-width:600px){.efcat-info h3{font-size:.82rem}.efcat-info{padding:10px 10px 12px}}
+
+/* ══════ CATPAGE: SUBCATEGORÍAS (chips blancos con sombra) ══════ */
+.catpage-subs{display:flex;gap:12px;overflow-x:auto;padding:20px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.catpage-subs::-webkit-scrollbar{display:none}
+.catpage-sub{flex:0 0 auto;min-width:100px;max-width:140px;background:#fff;border:none;border-radius:16px;padding:12px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.catpage-sub:hover,.catpage-sub.on{transform:translateY(-3px);box-shadow:0 6px 20px rgba(14,147,165,.18);outline:2px solid #19C1D6}
+.catpage-sub-img{width:68px;height:68px;border-radius:12px;background:#f5f7f8;margin:0 auto 8px;overflow:hidden;display:grid;place-items:center}
+.catpage-sub-img img{width:100%;height:100%;object-fit:contain;padding:4px}
+.catpage-sub span{font-size:.78rem;font-weight:600;color:#1B2126;display:block;line-height:1.2}
+.catpage-sub small{font-size:.72rem;color:#0E93A5;font-weight:700}
+@media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:54px;height:54px}}
+
+/* ══════ ZOOM PRODUCTOS: reducir ══════ */
+.card-prod:hover img,.prod-card:hover img,.grid-catalogo .card-prod:hover img{transform:scale(1.03)!important}
+.lupa{display:none!important}
+
+/* ══════ CATPAGE GRID ══════ */
+#catpage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+@media(max-width:600px){#catpage-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+#catpage-grid img{width:100%;height:100%;object-fit:contain;padding:8px;background:#fff}
+
+
+/* ══════ CHIPS CATÁLOGO CON FOTOS ══════ */
+.ef-cat-ico img{width:36px!important;height:36px!important;object-fit:contain!important;border-radius:8px!important;background:#f5f7f8}
+.ef-cat-chip--activa .ef-cat-ico img{background:rgba(255,255,255,.2);border-radius:10px}
 </style>
 <style>
 .ef-tab{display:none}
@@ -279,7 +285,7 @@
       <button class="btn btn-linea btn-sm" data-ir-q="">Ver todo <span class="fl">→</span></button>
     </div>
     <div class="efcat-grid reveal">
-      <button class="efcat-card" data-ir-cat="Cargadores y cables" style="--cat-clr:#0E93A5">
+      <button class="efcat-card" data-ir-cat="Cargadores y cables">
         <div class="efcat-visual">
           <img src="assets/img/cat-cargadores_y_cables.webp" alt="Cargadores y cables" loading="lazy">
         </div>
@@ -288,7 +294,7 @@
           <span class="efcat-cnt" data-conteo="Cargadores y cables">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Audífonos y parlantes" style="--cat-clr:#7C3AED">
+      <button class="efcat-card" data-ir-cat="Audífonos y parlantes">
         <div class="efcat-visual">
           <img src="https://drive.google.com/thumbnail?id=1b07oP0Dv0CPVoXd06PbfDyKDRibqIST2&sz=w800" alt="Audífonos y parlantes" loading="lazy">
         </div>
@@ -297,7 +303,7 @@
           <span class="efcat-cnt" data-conteo="Audífonos y parlantes">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Accesorios" style="--cat-clr:#E97316">
+      <button class="efcat-card" data-ir-cat="Accesorios">
         <div class="efcat-visual">
           <img src="https://drive.google.com/thumbnail?id=1OYOf8yve_Wn3TXz5SJkeaYt6BugxcaXK&sz=w800" alt="Accesorios" loading="lazy">
         </div>
@@ -306,7 +312,7 @@
           <span class="efcat-cnt" data-conteo="Accesorios">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Pantallas" style="--cat-clr:#DC2626">
+      <button class="efcat-card" data-ir-cat="Pantallas">
         <div class="efcat-visual">
           <img src="https://drive.google.com/thumbnail?id=1Oyg0ndpUYn6M7REp5r6FY-XD81PtlMNL&sz=w800" alt="Pantallas" loading="lazy">
         </div>
@@ -315,7 +321,7 @@
           <span class="efcat-cnt" data-conteo="Pantallas">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Computación" style="--cat-clr:#2563EB">
+      <button class="efcat-card" data-ir-cat="Computación">
         <div class="efcat-visual">
           <img src="assets/img/cat-computacion.webp" alt="Computación" loading="lazy">
         </div>
@@ -324,7 +330,7 @@
           <span class="efcat-cnt" data-conteo="Computación">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Smartwatch" style="--cat-clr:#059669">
+      <button class="efcat-card" data-ir-cat="Smartwatch">
         <div class="efcat-visual">
           <img src="https://drive.google.com/thumbnail?id=1tsVUhcz4e05X_9dHEQoO5urQmFGpzU3u&sz=w800" alt="Smartwatch" loading="lazy">
         </div>
@@ -333,7 +339,7 @@
           <span class="efcat-cnt" data-conteo="Smartwatch">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Power bank y tomas" style="--cat-clr:#CA8A04">
+      <button class="efcat-card" data-ir-cat="Power bank y tomas">
         <div class="efcat-visual">
           <img src="assets/img/cat-power_bank_y_tomas.webp" alt="Power bank y tomas" loading="lazy">
         </div>
@@ -342,7 +348,7 @@
           <span class="efcat-cnt" data-conteo="Power bank y tomas">—</span>
         </div>
       </button>
-      <button class="efcat-card" data-ir-cat="Baterías" style="--cat-clr:#6D28D9">
+      <button class="efcat-card" data-ir-cat="Baterías">
         <div class="efcat-visual">
           <img src="https://drive.google.com/thumbnail?id=1Nk0ggirU18MUnhPWz-1Wjf0ShGymj6uI&sz=w800" alt="Baterías" loading="lazy">
         </div>
@@ -398,42 +404,42 @@
           <span class="ef-cat-count" id="cnt-todo"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Cargadores y cables" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1OYOf8yve_Wn3TXz5SJkeaYt6BugxcaXK&sz=w200" alt="Cargadores" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Cargadores</span>
           <span class="ef-cat-count" data-cnt="Cargadores y cables"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Accesorios" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-2 5.4-4 7l-1 1.5V20H10v-2.5L9 16c-2-1.6-4-4-4-7a7 7 0 0 1 7-7z"/><path d="M10 20h4v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1OYOf8yve_Wn3TXz5SJkeaYt6BugxcaXK&sz=w200" alt="Accesorios" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Accesorios</span>
           <span class="ef-cat-count" data-cnt="Accesorios"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Audífonos y parlantes" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 1 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1b07oP0Dv0CPVoXd06PbfDyKDRibqIST2&sz=w200" alt="Audio" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Audio</span>
           <span class="ef-cat-count" data-cnt="Audífonos y parlantes"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Power bank y tomas" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="10" rx="3"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2M14 11v2"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=157UsPloFedWfzcPpS1-Q9FqGIxIM-2bT&sz=w200" alt="Power bank" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Power bank</span>
           <span class="ef-cat-count" data-cnt="Power bank y tomas"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Smartwatch" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="16" rx="4"/><path d="M9 1h6M9 23h6"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1tsVUhcz4e05X_9dHEQoO5urQmFGpzU3u&sz=w200" alt="Smartwatch" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Smartwatch</span>
           <span class="ef-cat-count" data-cnt="Smartwatch"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Computación" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1-SaQ6T2obxFKZTXYDuUKqriX7D9gygQ6&sz=w200" alt="Computación" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Computación</span>
           <span class="ef-cat-count" data-cnt="Computación"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Pantallas" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1Oyg0ndpUYn6M7REp5r6FY-XD81PtlMNL&sz=w200" alt="Repuestos" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Repuestos</span>
           <span class="ef-cat-count" data-cnt="Pantallas"></span>
         </button>
         <button class="ef-cat-chip" data-cat-chip="Baterías" type="button">
-          <span class="ef-cat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="18" rx="2"/><path d="M10 2h4"/><path d="M10 10h4M10 14h4"/></svg></span>
+          <span class="ef-cat-ico"><img src="https://drive.google.com/thumbnail?id=1Nk0ggirU18MUnhPWz-1Wjf0ShGymj6uI&sz=w200" alt="Baterías" style="width:36px;height:36px;object-fit:contain;border-radius:8px"></span>
           <span class="ef-cat-label">Baterías</span>
           <span class="ef-cat-count" data-cnt="Baterías"></span>
         </button>

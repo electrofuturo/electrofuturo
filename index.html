@@ -35,87 +35,101 @@
 .local-foto:hover img{transform:scale(1.06)}
 .local-foto span{position:absolute;bottom:0;left:0;right:0;padding:8px 10px;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.75rem;font-weight:500}
 
-/* ══════ CAMBIOS ELECTROFUTURO v2 ══════ */
 
-/* Hero con foto de fondo */
+/* ══════════════════════════════════════════════
+   ELECTROFUTURO v3 — CSS CUSTOM DEFINITIVO
+   ══════════════════════════════════════════════ */
+
+/* ── Hero con foto de fondo ── */
 .hero.hero--foto{background:linear-gradient(135deg,rgba(27,33,38,.88),rgba(14,147,165,.12)),url('assets/img/interior.webp') center/cover no-repeat !important}
 .hero--foto .arco,.hero--foto .hero-mock{display:none}
 .hero--foto .lead{max-width:540px;color:rgba(255,255,255,.85)}
 
-/* Categorías con fotos */
+/* ── Categorías homepage — cards blancas limpias ── */
+.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:28px}
+@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 
-/* Tira de fotos del local */
-.seccion-foto{padding:0;overflow:hidden}
-.foto-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
-@media(max-width:700px){.foto-strip{grid-template-columns:repeat(2,1fr)}}
-.foto-strip-item{aspect-ratio:3/4;overflow:hidden}
-.foto-strip-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.foto-strip-item:hover img{transform:scale(1.05)}
+.efcat-card{background:#fff;border:none;border-radius:20px;padding:0;cursor:pointer;text-align:center;transition:transform .3s,box-shadow .3s;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.efcat-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.12)}
 
-/* Redes sociales */
-.red-ico{font-size:1.2rem;text-decoration:none;opacity:.6;transition:opacity .2s}
-.red-ico:hover{opacity:1}
+.efcat-visual{aspect-ratio:5/3;overflow:hidden;background:#f8f9fa;display:flex;align-items:center;justify-content:center;padding:16px}
+.efcat-visual img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .35s}
+.efcat-card:hover .efcat-visual img{transform:scale(1.04)}
 
-/* Botones flotantes */
-.flotantes{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:900}
-.flot{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;box-shadow:0 4px 14px rgba(0,0,0,.35);transition:transform .2s;text-decoration:none;font-size:1.4rem}
-.flot:hover{transform:scale(1.1)}
-.flot-wa{background:#25D366;width:56px;height:56px;font-size:1.6rem}
-.flot-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);width:44px;height:44px}
-.flot-tt{background:#010101;width:44px;height:44px}
+.efcat-info{padding:14px 14px 18px;background:#fff}
+.efcat-info h3{font-size:.95rem;font-weight:700;color:#1B2126;margin:0;line-height:1.3}
+.efcat-cnt{font-size:.8rem;color:#0E93A5;font-weight:600;margin-top:4px;display:block}
+@media(max-width:500px){.efcat-info{padding:10px 10px 14px}.efcat-info h3{font-size:.82rem}}
 
-/* Catpage (páginas de categoría) */
-.catpage-hero{position:relative;padding:60px 0 40px;text-align:center;overflow:hidden;min-height:220px;background-size:cover;background-position:center}
-.catpage-hero::before{content:'';position:absolute;inset:0;background:inherit;opacity:.3;z-index:0}
-.catpage-hero>*{position:relative;z-index:1}
+/* ── Carrusel de fotos del local (perspectiva 3D) ── */
+.seccion-foto{padding:40px 0;overflow:hidden;background:linear-gradient(180deg,#f0f4f6 0%,#fff 100%)}
+.foto-strip{display:flex;gap:0;justify-content:center;align-items:center;perspective:1200px;padding:0 40px}
+.foto-strip-item{flex:0 0 25%;max-width:320px;aspect-ratio:3/4;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.12);transition:transform .4s,box-shadow .4s}
+.foto-strip-item:nth-child(1){transform:rotateY(12deg) scale(.92)}
+.foto-strip-item:nth-child(2){transform:rotateY(4deg) scale(.96);z-index:1}
+.foto-strip-item:nth-child(3){transform:rotateY(-4deg) scale(.96);z-index:1}
+.foto-strip-item:nth-child(4){transform:rotateY(-12deg) scale(.92)}
+.foto-strip-item:hover{transform:rotateY(0) scale(1.02)!important;box-shadow:0 16px 50px rgba(0,0,0,.2);z-index:2}
+.foto-strip-item img{width:100%;height:100%;object-fit:cover}
+@media(max-width:768px){.foto-strip{flex-wrap:wrap;perspective:none;gap:12px;padding:0 16px}.foto-strip-item{flex:0 0 calc(50% - 6px);transform:none!important;max-width:none}}
+
+/* ── Chips catálogo — más grandes, con foto ── */
+.ef-cat-chip{min-width:100px;padding:14px 14px 10px}
+.ef-cat-ico{width:48px;height:48px}
+.ef-cat-ico img{width:48px!important;height:48px!important;object-fit:contain!important;border-radius:12px!important;background:#f5f7f8;padding:4px}
+.ef-cat-chip--activa .ef-cat-ico img{background:rgba(255,255,255,.25);border-radius:12px}
+@media(max-width:768px){.ef-cat-chip{min-width:85px;padding:10px 10px 8px}.ef-cat-ico{width:40px;height:40px}.ef-cat-ico img{width:40px!important;height:40px!important}}
+
+/* ── Chip "Todo" sin icono ── */
+.ef-cat-chip[data-cat-chip=""] .ef-cat-ico svg{display:none}
+.ef-cat-chip[data-cat-chip=""] .ef-cat-ico{width:0;height:0;overflow:hidden;margin:0;padding:0}
+.ef-cat-chip[data-cat-chip=""]{justify-content:center;gap:2px}
+
+/* ── Catpage: subcategorías blancas limpias ── */
+.catpage-subs{display:flex;gap:14px;overflow-x:auto;padding:24px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.catpage-subs::-webkit-scrollbar{display:none}
+.catpage-sub{flex:0 0 auto;min-width:105px;max-width:140px;background:#fff;border:none;border-radius:18px;padding:14px 12px;text-align:center;cursor:pointer;transition:transform .25s,box-shadow .25s;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.catpage-sub:hover,.catpage-sub.on{transform:translateY(-4px);box-shadow:0 8px 24px rgba(14,147,165,.15);outline:2.5px solid #19C1D6}
+.catpage-sub-img{width:72px;height:72px;border-radius:14px;background:#f5f7f8;margin:0 auto 10px;overflow:hidden;display:grid;place-items:center}
+.catpage-sub-img img{width:100%;height:100%;object-fit:contain;padding:6px}
+.catpage-sub span{font-size:.8rem;font-weight:600;color:#1B2126;display:block;line-height:1.25}
+.catpage-sub small{font-size:.73rem;color:#0E93A5;font-weight:700;margin-top:3px;display:block}
+@media(max-width:600px){.catpage-sub{min-width:90px;padding:10px 8px}.catpage-sub-img{width:56px;height:56px}}
+
+/* ── Chip "Todo" en catpage ── */
+.catpage-sub[data-sub-val=""] .catpage-sub-img{display:none}
+
+/* ── Catpage hero ── */
+.catpage-hero{position:relative;padding:60px 0 40px;text-align:center;overflow:hidden;min-height:220px;background-size:cover!important;background-position:center!important}
 .catpage-hero .wrap{position:relative;z-index:1}
 .catpage-back{display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,.7);font-size:.85rem;padding:6px 16px;background:rgba(255,255,255,.1);border-radius:20px;border:1px solid rgba(255,255,255,.15);cursor:pointer;margin-bottom:18px;transition:background .2s}
 .catpage-back:hover{background:rgba(255,255,255,.2)}
 .catpage-hero h2{font-family:var(--disp);font-size:clamp(1.8rem,5vw,2.8rem);color:#fff;margin:0 0 8px}
 .catpage-hero p{color:rgba(255,255,255,.75);max-width:500px;margin:0 auto}
 
-
-/* ══════ CATEGORÍAS HOMEPAGE ══════ */
-.efcat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
-@media(max-width:900px){.efcat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.efcat-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
-
-.efcat-card{background:#fff;border:none;border-radius:18px;padding:0;cursor:pointer;text-align:center;transition:transform .25s,box-shadow .25s;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-.efcat-card:hover{transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
-
-.efcat-visual{aspect-ratio:4/3;overflow:hidden;position:relative;background:#f5f7f8}
-.efcat-visual img{width:100%;height:100%;object-fit:contain;padding:12px;transition:transform .35s}
-.efcat-card:hover .efcat-visual img{transform:scale(1.04)}
-
-.efcat-info{padding:14px 12px 16px;background:#fff}
-.efcat-info h3{font-size:.9rem;font-weight:700;color:#1B2126;margin:0;line-height:1.2}
-.efcat-cnt{font-size:.78rem;color:#0E93A5;font-weight:600;margin-top:3px;display:block}
-@media(max-width:600px){.efcat-info h3{font-size:.82rem}.efcat-info{padding:10px 10px 12px}}
-
-/* ══════ CATPAGE: SUBCATEGORÍAS (chips blancos con sombra) ══════ */
-.catpage-subs{display:flex;gap:12px;overflow-x:auto;padding:20px 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.catpage-subs::-webkit-scrollbar{display:none}
-.catpage-sub{flex:0 0 auto;min-width:100px;max-width:140px;background:#fff;border:none;border-radius:16px;padding:12px;text-align:center;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.catpage-sub:hover,.catpage-sub.on{transform:translateY(-3px);box-shadow:0 6px 20px rgba(14,147,165,.18);outline:2px solid #19C1D6}
-.catpage-sub-img{width:68px;height:68px;border-radius:12px;background:#f5f7f8;margin:0 auto 8px;overflow:hidden;display:grid;place-items:center}
-.catpage-sub-img img{width:100%;height:100%;object-fit:contain;padding:4px}
-.catpage-sub span{font-size:.78rem;font-weight:600;color:#1B2126;display:block;line-height:1.2}
-.catpage-sub small{font-size:.72rem;color:#0E93A5;font-weight:700}
-@media(max-width:600px){.catpage-sub{min-width:85px;max-width:110px;padding:8px}.catpage-sub-img{width:54px;height:54px}}
-
-/* ══════ ZOOM PRODUCTOS: reducir ══════ */
-.card-prod:hover img,.prod-card:hover img,.grid-catalogo .card-prod:hover img{transform:scale(1.03)!important}
-.lupa{display:none!important}
-
-/* ══════ CATPAGE GRID ══════ */
+/* ── Catpage grid ── */
 #catpage-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 @media(max-width:600px){#catpage-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
 #catpage-grid img{width:100%;height:100%;object-fit:contain;padding:8px;background:#fff}
 
+/* ── Zoom de productos REDUCIDO ── */
+.card-prod:hover img,.prod-card:hover img,.grid-catalogo .card-prod:hover img{transform:scale(1.02)!important}
+.lupa{transform:scale(.7)!important;opacity:.5!important}
 
-/* ══════ CHIPS CATÁLOGO CON FOTOS ══════ */
-.ef-cat-ico img{width:36px!important;height:36px!important;object-fit:contain!important;border-radius:8px!important;background:#f5f7f8}
-.ef-cat-chip--activa .ef-cat-ico img{background:rgba(255,255,255,.2);border-radius:10px}
+/* ── Botones flotantes — vertical, limpios, sin tapar asistente ── */
+.flotantes{position:fixed;bottom:90px;right:16px;display:flex;flex-direction:column;gap:10px;z-index:800}
+.flot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;box-shadow:0 3px 12px rgba(0,0,0,.25);transition:transform .2s;text-decoration:none;font-size:1.2rem}
+.flot:hover{transform:scale(1.12)}
+.flot-wa{background:#25D366;width:52px;height:52px;font-size:1.5rem}
+.flot-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.flot-tt{background:#010101}
+@media(max-width:768px){.flotantes{bottom:80px;right:12px;gap:8px}.flot{width:40px;height:40px}.flot-wa{width:46px;height:46px}}
+
+/* ── Redes sociales footer ── */
+.red-ico{font-size:1.2rem;text-decoration:none;opacity:.6;transition:opacity .2s}
+.red-ico:hover{opacity:1}
+
 </style>
 <style>
 .ef-tab{display:none}

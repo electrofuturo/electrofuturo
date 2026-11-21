@@ -390,3 +390,27 @@ section[id],header[id]{scroll-margin-top:130px}
   .proceso-g{background-image:url('../img/local/tecnico-v-1080.webp');background-position:center 35%}
   .banda{background-image:url('../img/local/pasillo-v-1080.webp')}
 }
+
+/* Aviso de arriba en celular: una sola línea delgada, mensaje y botón "Ver lista" */
+/* .msj también es la burbuja del chat: aquí se le quita ese relleno y ancho */
+.anuncio .msj{padding:0;max-width:none;border-radius:0;line-height:inherit;white-space:normal}
+.anuncio-corto{display:none}
+@media (max-width:560px){
+  .anuncio .wrap{grid-template-columns:1fr 24px;gap:6px;padding:7px 8px 7px 14px;min-height:0}
+  .anuncio .centro-msj{flex-wrap:nowrap;justify-content:center;gap:8px;font-size:.71rem;letter-spacing:-.005em;line-height:1.2;min-width:0}
+  .anuncio .msj{display:inline-flex;gap:5px;white-space:nowrap;line-height:1.2;min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .anuncio .msj>span{overflow:hidden;text-overflow:ellipsis}
+  .anuncio-extra{display:none}
+  .anuncio-corto{display:inline}
+  .anuncio a{margin:0;flex:none;padding:3px 9px;border:1px solid rgba(255,255,255,.45);border-radius:999px;
+    font-size:.66rem;line-height:1.2;background:rgba(255,255,255,.14)}
+  .anuncio a .fl{display:none}
+  .anuncio .cerrar{align-self:center;width:24px;height:24px;font-size:.95rem}
+}
+
+/* Que la página no se corra hacia los lados en celular: lo que sobresale
+   (orbes, decoraciones, carruseles) se recorta sin crear scroll horizontal.
+   clip no rompe la barra fija (sticky); hidden solo en el html para navegadores viejos. */
+html{overflow-x:hidden}
+body{overflow-x:visible}
+@supports (overflow:clip){html,body{overflow-x:clip}}

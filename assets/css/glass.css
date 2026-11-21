@@ -350,7 +350,7 @@ section[id],header[id]{scroll-margin-top:130px}
   .seccion{padding:64px 0}
   .hero-v{--hv-alto:230vh}
   .hv-txt{padding-top:22px}
-  .hv-toque{bottom:clamp(22px,5vh,48px)} /* el logo del toque más abajo, para que no tape las manos */
+  .hv-toque{top:calc(50% + 78px);bottom:auto} /* el logo justo debajo de las manos, centradas en la pantalla */
   .hero-v .lead{font-size:.95rem}
   .hero-v .hero-buscar{margin-top:18px}
   .tec-cat,.tec-gal,.tec-dif,.tec-ubi{--w:220px}

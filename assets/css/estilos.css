@@ -1221,7 +1221,10 @@ body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opa
 .zoom-overlay .zoom-nombre{position:absolute;bottom:env(safe-area-inset-bottom,20px);left:0;right:0;
   text-align:center;color:#fff;font-size:.82rem;font-family:var(--mono);letter-spacing:.08em;
   text-transform:uppercase;opacity:.7;padding:0 24px}
-@media(hover:none){.zoom-lens{display:none}}
+/* Lupa táctil: fija en pantalla, encima del dedo */
+.zoom-lens-tactil{position:fixed;left:0;top:0;width:150px;height:150px;z-index:9998;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1)}
+@media(hover:none){.prod-foto img{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}}
+@media(prefers-reduced-motion:reduce){.zoom-lens{transition:opacity .1s}}
 
 @media(max-width:1000px){
   .nav-puntos{display:flex}

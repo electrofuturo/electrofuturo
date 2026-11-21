@@ -1069,6 +1069,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const ZOOM_FACTOR = 2; // aumento sobre la foto tal como se ve (antes 2.5x sobre su tamaño original, demasiado fuerte)
   const LENS_SIZE = 140;
   const esTouch = matchMedia('(hover:none)').matches;
+  // Zona real de la foto dentro del recuadro (object-fit:contain + padding)
+  function cajaFoto(foto, img) {
+    const r = foto.getBoundingClientRect(), cs = getComputedStyle(img);
+    const pw = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight), ph = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+    const k = Math.min((r.width - pw) / img.naturalWidth, (r.height - ph) / img.naturalHeight);
+    const w = img.naturalWidth * k, h = img.naturalHeight * k;
+    return { w, h, x: (r.width - w) / 2, y: (r.height - h) / 2 };
+  }
 
   // --- Desktop: lente circular que sigue el cursor ---
   if (!esTouch) {
@@ -1082,16 +1090,8 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(lensEl);
       return lensEl;
     }
-    // Zona real de la foto dentro del recuadro (object-fit:contain + padding)
-    function cajaFoto(foto, img) {
-      const r = foto.getBoundingClientRect(), cs = getComputedStyle(img);
-      const pw = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight), ph = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
-      const k = Math.min((r.width - pw) / img.naturalWidth, (r.height - ph) / img.naturalHeight);
-      const w = img.naturalWidth * k, h = img.naturalHeight * k;
-      return { w, h, x: (r.width - w) / 2, y: (r.height - h) / 2 };
-    }
     document.addEventListener('mouseenter', function(e) {
-      const foto = e.target.closest('.prod-foto');
+      const foto = e.target.closest && e.target.closest('.prod-foto');
       if (!foto) return;
       const img = foto.querySelector('img');
       if (!img || !img.naturalWidth) return;
@@ -1121,8 +1121,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }, true);
   }
 
-  // --- Móvil: overlay con imagen full + pinch-to-zoom nativo ---
+  // --- Móvil: dejar el dedo quieto un instante sobre la foto abre una lupa que lo sigue ---
   if (esTouch) {
+    const LENTE = 150, ZOOM_M = 2.2, ESPERA = 160;
+    const lente = document.createElement('div');
+    lente.className = 'zoom-lens zoom-lens-tactil';
+    document.body.appendChild(lente);
+    let foto = null, img = null, caja = null, timer = 0, activa = false, x0 = 0, y0 = 0, ultimo = null, sinClickHasta = 0;
+    function colocar(t) {
+      const r = foto.getBoundingClientRect();
+      const x = Math.max(0, Math.min(t.clientX - r.left, r.width)), y = Math.max(0, Math.min(t.clientY - r.top, r.height));
+      let top = r.top + y - LENTE - 30;               // arriba del dedo, para que el dedo no la tape
+      if (top < 8) top = r.top + y + 30;
+      lente.style.left = Math.max(8, Math.min(r.left + x - LENTE / 2, innerWidth - LENTE - 8)) + 'px';
+      lente.style.top = top + 'px';
+      lente.style.backgroundPosition = `-${(x - caja.x) * ZOOM_M - LENTE / 2}px -${(y - caja.y) * ZOOM_M - LENTE / 2}px`;
+    }
+    function soltar() {
+      clearTimeout(timer);
+      if (activa) { lente.classList.remove('activa'); activa = false; sinClickHasta = Date.now() + 400; }
+      foto = null;
+    }
+    document.addEventListener('touchstart', function(e) {
+      const f = e.target.closest('.prod-foto');
+      if (!f || e.touches.length > 1) return soltar();
+      const im = f.querySelector('img');
+      if (!im || !im.naturalWidth) return;
+      foto = f; img = im; ultimo = e.touches[0]; x0 = ultimo.clientX; y0 = ultimo.clientY;
+      timer = setTimeout(function() {
+        if (!foto) return;
+        caja = cajaFoto(foto, img);
+        lente.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
+        lente.style.backgroundSize = `${caja.w * ZOOM_M}px ${caja.h * ZOOM_M}px`;
+        colocar(ultimo);
+        activa = true; lente.classList.add('activa');
+      }, ESPERA);
+    }, { passive: true });
+    // Si el dedo se desliza antes de la espera, es scroll normal; con la lupa abierta, el dedo la mueve
+    document.addEventListener('touchmove', function(e) {
+      if (!foto) return;
+      ultimo = e.touches[0];
+      if (!activa) { if (Math.hypot(ultimo.clientX - x0, ultimo.clientY - y0) > 10) soltar(); return; }
+      e.preventDefault();
+      colocar(ultimo);
+    }, { passive: false });
+    document.addEventListener('touchend', soltar);
+    document.addEventListener('touchcancel', soltar);
+    document.addEventListener('contextmenu', function(e) { if (e.target.closest('.prod-foto')) e.preventDefault(); });
+
+    // Toque corto: foto completa con pinch-to-zoom nativo
     let overlay = document.createElement('div');
     overlay.className = 'zoom-overlay';
     overlay.innerHTML = '<button class="zoom-cerrar" aria-label="Cerrar">✕</button><img src="" alt=""><div class="zoom-nombre"></div>';
@@ -1138,6 +1185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', function(e) {
       const foto = e.target.closest('.prod-foto');
       if (!foto) return;
+      if (Date.now() < sinClickHasta) { e.stopPropagation(); e.preventDefault(); return; } // venía de usar la lupa
       const img = foto.querySelector('img');
       if (!img) return;
       e.stopPropagation();

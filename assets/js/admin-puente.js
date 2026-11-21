@@ -22,6 +22,8 @@
     const t = ((p.categoria || '') + ' ' + (p.subcategoria || '') + ' ' + (p.nombre || '')).toUpperCase();
     if (p.categoria === 'Pantallas') return CAT_POS.PNT;
     if (p.categoria === 'Baterías') return CAT_POS.BAT;
+    if (p.categoria === 'Herramientas') return CAT_POS.HER;
+    if (p.categoria === 'Celulares') return 'Celulares';
     if (/RELOJ|SMARTWATCH|WATCH/.test(t)) return CAT_POS.RLJ;
     if (/POWER ?BANK|TOMACORRIENTE|REGLETA/.test(t)) return CAT_POS.PWB;
     if (/AUDIF|DIADEMA|PARLANTE|AUDIO|BUDS|SPEAKER|MICR/.test(t)) return CAT_POS.AUD;
@@ -38,29 +40,45 @@
   function sembrarCatalogo() {
     const web = global.EF_PRODUCTOS || [];
     if (!web.length) return 0;
+    /* Catálogo nuevo (cambió EF_CATALOGO_VERSION): sale todo el inventario anterior
+       (tienda y semilla vieja del portal), menos lo que ya tiene ventas, y entran
+       las referencias nuevas con 1 unidad de existencia. */
+    const version = global.EF_CATALOGO_VERSION || '';
+    const nuevo = version && S.config.webCatalogoVer !== version;
+    if (nuevo) S.products = S.products.filter(p => !p.web && p.sold > 0);
     const codigos = new Set(S.products.map(p => String(p.code || '').toUpperCase()));
     const marcas = new Set(S.config.marcas || []);
+    const cats = new Set(S.config.categorias || []);
     let n = 0;
     web.forEach(w => {
       if (codigos.has(w.sku.toUpperCase())) return;
       const cat = categoria(w);
+      cats.add(cat);
       S.products.push({
         id: uid('pr'), code: w.sku, name: w.nombre, category: cat, brand: w.marca || '',
         price: Number(w.precio) || 0, price2: Number(w.precio) || 0, cost: 0,
-        stock: 0, min: 0, sold: 0, img: false, createdAt: nowISO(),
-        /* Sin existencia cargada todavía: se puede facturar con advertencia */
-        conAdv: true, web: true,
-        desc: [w.subcategoria, w.specs && w.specs['Compatibilidad']].filter(Boolean).join(' · ')
+        stock: nuevo ? 1 : 0, min: 0, sold: 0, img: false, createdAt: nowISO(),
+        conAdv: true, web: true, webImg: w.imagen || '',
+        desc: [w.subcategoria, ...Object.entries(w.specs || {}).map(([k, v]) => k + ': ' + v)].filter(Boolean).join(' · ')
       });
-      if (w.marca) marcas.add(w.marca);
+      if (w.marca && w.marca !== 'Genérico') marcas.add(w.marca);
       n++;
     });
-    if (n) {
+    if (n || nuevo) {
       S.config.marcas = [...marcas];
+      S.config.categorias = [...cats];
       S.config.webCatalogo = nowISO();
+      if (version) S.config.webCatalogoVer = version;
       save('products', 'config');
     }
+    fotosWeb();
     return n;
+  }
+
+  /* La foto de la tienda sirve de miniatura en el portal (sin copiarla a la base local) */
+  function fotosWeb() {
+    if (typeof IMG === 'undefined') return;
+    S.products.forEach(p => { if (p.webImg && !IMG[p.id]) IMG[p.id] = p.webImg; });
   }
 
   /* ---------- 2. pedidos de la tienda → ventas en espera ---------- */
@@ -168,7 +186,7 @@
     if (arrancado) return;
     arrancado = true;
     const n = sembrarCatalogo();
-    if (n) aviso(`${n} referencias de la tienda cargadas al inventario`, '📦');
+    if (n) { aviso(`${n} referencias de la tienda cargadas al inventario`, '📦'); try { render(); } catch (e) { } }
     publicarStock();
     traerPedidos();
     setInterval(traerPedidos, 30000);

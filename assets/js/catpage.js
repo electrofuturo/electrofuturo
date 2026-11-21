@@ -16,7 +16,9 @@
     'Computación':            { desc: 'Mouse, teclados, hubs USB, cables HDMI, micrófonos y periféricos.',          color: '#2563EB' },
     'Smartwatch':             { desc: 'Relojes inteligentes con monitor de salud, notificaciones y GPS.',            color: '#059669' },
     'Power bank y tomas':     { desc: 'Baterías portátiles, power banks inalámbricos y tomacorrientes.',             color: '#CA8A04' },
-    'Baterías':               { desc: 'Baterías de reemplazo para iPhone, línea Mecánico e Ilummen.',                color: '#6D28D9' }
+    'Baterías':               { desc: 'Baterías de reemplazo para iPhone, línea Mecánico e Ilummen.',                color: '#6D28D9' },
+    'Herramientas':           { desc: 'Pegantes, cintas, pastas de soldar, flux y herramientas para el taller.',     color: '#475569' },
+    'Celulares':              { desc: 'Celulares Xiaomi y Alcatel, nuevos y en caja sellada.',                         color: '#0F766E' }
   };
 
   function slug(s) {

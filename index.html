@@ -22,7 +22,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/estilos.css?v=16">
 <link rel="stylesheet" href="assets/css/chips-cat.css?v=16">
-<link rel="stylesheet" href="assets/css/glass.css?v=5">
+<link rel="stylesheet" href="assets/css/glass.css?v=7">
 <link rel="preload" as="image" href="assets/img/hero/seq/d/001.webp" media="(min-width: 768px)">
 <link rel="preload" as="image" href="assets/img/hero/seq/m/001.webp" media="(max-width: 767px)">
 <style>
@@ -161,28 +161,68 @@
       </div>
     </div>
   </div>
-  <div class="carrusel3d" aria-hidden="true">
+  <div class="carrusel3d" id="carrusel3d">
     <div class="anillo">
-      <figure style="--i:0"><img src="assets/img/local/tienda-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Tienda</figcaption></figure>
-      <figure style="--i:1"><img src="assets/img/local/tecnico-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Servicio técnico</figcaption></figure>
-      <figure style="--i:2"><img src="assets/img/local/marcas-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Marcas aliadas</figcaption></figure>
-      <figure style="--i:3"><img src="assets/img/local/laboratorio-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Laboratorio</figcaption></figure>
-      <figure style="--i:4"><img src="assets/img/local/fundas-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Fundas y cases</figcaption></figure>
-      <figure style="--i:5"><img src="assets/img/local/certificados-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Certificaciones</figcaption></figure>
-      <figure style="--i:6"><img src="assets/img/local/publifuturo-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Sala PubliFuturo</figcaption></figure>
-      <figure style="--i:7"><img src="assets/img/local/bodega-v-720.webp" alt="" loading="lazy" decoding="async"><figcaption>Bodega</figcaption></figure>
+      <button type="button" class="gal-foto" style="--i:0" data-full="assets/img/local/tienda-v-1440.webp" aria-label="Ver foto: Tienda"><img src="assets/img/local/tienda-v-720.webp" alt="Tienda de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:1" data-full="assets/img/local/tecnico-v-1440.webp" aria-label="Ver foto: Servicio técnico"><img src="assets/img/local/tecnico-v-720.webp" alt="Servicio técnico de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:2" data-full="assets/img/local/marcas-v-1440.webp" aria-label="Ver foto: Marcas aliadas"><img src="assets/img/local/marcas-v-720.webp" alt="Marcas aliadas de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:3" data-full="assets/img/local/laboratorio-v-1440.webp" aria-label="Ver foto: Laboratorio"><img src="assets/img/local/laboratorio-v-720.webp" alt="Laboratorio de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:4" data-full="assets/img/local/fundas-v-1440.webp" aria-label="Ver foto: Fundas y cases"><img src="assets/img/local/fundas-v-720.webp" alt="Fundas y cases de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:5" data-full="assets/img/local/certificados-v-1440.webp" aria-label="Ver foto: Certificaciones"><img src="assets/img/local/certificados-v-720.webp" alt="Certificaciones de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:6" data-full="assets/img/local/publifuturo-v-1440.webp" aria-label="Ver foto: Sala PubliFuturo"><img src="assets/img/local/publifuturo-v-720.webp" alt="Sala PubliFuturo de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" style="--i:7" data-full="assets/img/local/bodega-v-1440.webp" aria-label="Ver foto: Bodega"><img src="assets/img/local/bodega-v-720.webp" alt="Bodega de Electrofuturo" loading="lazy" decoding="async"></button>
     </div>
   </div>
   <div class="wrap">
     <div class="galeria-grid">
-      <figure><img src="assets/img/local/tienda-v-720.webp" alt="Tienda de Electrofuturo" loading="lazy" decoding="async"><figcaption>Tienda</figcaption></figure>
-      <figure><img src="assets/img/local/tecnico-v-720.webp" alt="Servicio técnico de Electrofuturo" loading="lazy" decoding="async"><figcaption>Servicio técnico</figcaption></figure>
-      <figure><img src="assets/img/local/marcas-v-720.webp" alt="Marcas aliadas de Electrofuturo" loading="lazy" decoding="async"><figcaption>Marcas aliadas</figcaption></figure>
-      <figure><img src="assets/img/local/laboratorio-v-720.webp" alt="Laboratorio de Electrofuturo" loading="lazy" decoding="async"><figcaption>Laboratorio</figcaption></figure>
-      <figure><img src="assets/img/local/fundas-v-720.webp" alt="Fundas y cases de Electrofuturo" loading="lazy" decoding="async"><figcaption>Fundas y cases</figcaption></figure>
-      <figure><img src="assets/img/local/certificados-v-720.webp" alt="Certificaciones de Electrofuturo" loading="lazy" decoding="async"><figcaption>Certificaciones</figcaption></figure>
+      <button type="button" class="gal-foto" data-full="assets/img/local/tienda-v-1440.webp" aria-label="Ver foto: Tienda"><img src="assets/img/local/tienda-v-720.webp" alt="Tienda de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" data-full="assets/img/local/tecnico-v-1440.webp" aria-label="Ver foto: Servicio técnico"><img src="assets/img/local/tecnico-v-720.webp" alt="Servicio técnico de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" data-full="assets/img/local/marcas-v-1440.webp" aria-label="Ver foto: Marcas aliadas"><img src="assets/img/local/marcas-v-720.webp" alt="Marcas aliadas de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" data-full="assets/img/local/laboratorio-v-1440.webp" aria-label="Ver foto: Laboratorio"><img src="assets/img/local/laboratorio-v-720.webp" alt="Laboratorio de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" data-full="assets/img/local/fundas-v-1440.webp" aria-label="Ver foto: Fundas y cases"><img src="assets/img/local/fundas-v-720.webp" alt="Fundas y cases de Electrofuturo" loading="lazy" decoding="async"></button>
+      <button type="button" class="gal-foto" data-full="assets/img/local/certificados-v-1440.webp" aria-label="Ver foto: Certificaciones"><img src="assets/img/local/certificados-v-720.webp" alt="Certificaciones de Electrofuturo" loading="lazy" decoding="async"></button>
     </div>
   </div>
+  <dialog class="visor" id="visor" aria-label="Foto del local">
+    <img alt="">
+    <button type="button" class="visor-btn visor-cerrar" aria-label="Cerrar">✕</button>
+    <button type="button" class="visor-btn visor-ant" aria-label="Foto anterior">‹</button>
+    <button type="button" class="visor-btn visor-sig" aria-label="Foto siguiente">›</button>
+  </dialog>
+<script>
+/* Galería: giro continuo que frena suave al pasar el mouse, y visor de fotos en alta calidad. */
+(function(){
+  var car=document.getElementById('carrusel3d'),anillo=car&&car.querySelector('.anillo'),visor=document.getElementById('visor');
+  if(!car||!visor)return;
+  var quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Giro: la velocidad se acerca poco a poco a su objetivo, así nunca frena en seco
+  var ang=0,vel=0,meta=1,visible=false,t0=0,raf=0,GRADOS=9; // 9°/s = una vuelta cada 40 s
+  function paso(t){var dt=t0?Math.min((t-t0)/1000,.05):0;t0=t;
+    var m=visor.open?0:meta;vel+=(m-vel)*Math.min(dt*2.5,1);ang+=vel*GRADOS*dt;
+    anillo.style.transform='rotateY('+(-ang)+'deg)';
+    raf=visible&&!quieto?requestAnimationFrame(paso):0;if(!raf)t0=0}
+  function arrancar(){if(!raf&&visible&&!quieto)raf=requestAnimationFrame(paso)}
+  new IntersectionObserver(function(e){visible=e[0].isIntersecting;arrancar()}).observe(car);
+  car.addEventListener('pointerenter',function(){meta=.25});
+  car.addEventListener('pointerleave',function(){meta=1});
+  // Visor
+  var img=visor.querySelector('img'),lista=[],idx=0;
+  function mostrar(i){idx=(i+lista.length)%lista.length;var b=lista[idx],chica=b.querySelector('img');
+    img.classList.remove('lista');img.src=chica.currentSrc||chica.src;img.alt=chica.alt; // la foto pequeña ya cargada aparece al instante
+    var g=new Image();g.onload=function(){if(lista[idx]===b){img.src=g.src;img.classList.add('lista')}};g.src=b.dataset.full}
+  document.querySelectorAll('.galeria .gal-foto').forEach(function(b){b.addEventListener('click',function(){
+    lista=[].slice.call(b.closest('.anillo,.galeria-grid').querySelectorAll('.gal-foto'));
+    mostrar(lista.indexOf(b));visor.showModal();document.documentElement.classList.add('visor-abierto')})});
+  visor.addEventListener('close',function(){document.documentElement.classList.remove('visor-abierto')});
+  visor.addEventListener('click',function(e){if(e.target===visor)visor.close()});
+  visor.querySelector('.visor-cerrar').addEventListener('click',function(){visor.close()});
+  visor.querySelector('.visor-ant').addEventListener('click',function(){mostrar(idx-1)});
+  visor.querySelector('.visor-sig').addEventListener('click',function(){mostrar(idx+1)});
+  visor.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')mostrar(idx-1);if(e.key==='ArrowRight')mostrar(idx+1)});
+  var x0=null;visor.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  visor.addEventListener('touchend',function(e){if(x0===null)return;var d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>50)mostrar(idx+(d<0?1:-1));x0=null});
+})();
+</script>
 </section>
 <!-- ======================= 7. DESTACADOS ======================= -->
 <section class="seccion" style="padding-top:0">
@@ -954,7 +994,7 @@
 <script src="assets/js/productos.js?v=16"></script>
 <script src="assets/js/datos.js?v=16"></script>
 <script src="assets/js/nube.js?v=16"></script>
-<script src="assets/js/app.js?v=16"></script>
+<script src="assets/js/app.js?v=17"></script>
 <script src="assets/js/extras.js?v=16"></script>
 <script src="assets/js/chips-cat.js?v=16"></script>
 <script src="assets/js/catpage.js?v=1"></script>

@@ -144,7 +144,7 @@ section[id],header[id]{scroll-margin-top:130px}
 .tec img{width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);transform:rotate(var(--r,0deg));display:block}
 @keyframes tecFlota{0%,100%{translate:0 0}50%{translate:0 -16px}}
 .tec-cat{--w:min(420px,32vw);top:-130px;right:-40px;--r:-6deg}
-.tec-gal{--w:min(380px,30vw);top:10px;left:-90px;--r:8deg;animation-delay:-3s}
+.tec-gal{--w:min(380px,30vw);top:-10px;right:-60px;--r:8deg;animation-delay:-3s}
 .tec-dif{--w:min(420px,32vw);top:-70px;right:-80px;--r:10deg;animation-delay:-5s}
 .tec-ubi{--w:min(360px,28vw);bottom:-80px;left:-80px;--r:-8deg;animation-delay:-2s}
 
@@ -166,16 +166,32 @@ section[id],header[id]{scroll-margin-top:130px}
 .galeria{padding:30px 0 100px;overflow:hidden;position:relative}
 .galeria>.wrap{position:relative}
 .carrusel3d{position:relative;height:470px;perspective:1400px;display:grid;place-items:center}
-.carrusel3d .anillo{position:relative;width:260px;height:340px;transform-style:preserve-3d;animation:girar 40s linear infinite}
-.carrusel3d:hover .anillo{animation-play-state:paused}
-.carrusel3d figure{position:absolute;inset:0;margin:0;border-radius:22px;overflow:hidden;
+.carrusel3d .anillo{position:relative;width:260px;height:340px;transform-style:preserve-3d;will-change:transform}
+.gal-foto{display:block;padding:0;margin:0;cursor:zoom-in;font:inherit;background:#E9EEF2}
+.carrusel3d .gal-foto{position:absolute;inset:0;border-radius:22px;overflow:hidden;
   border:4px solid #fff;box-shadow:0 24px 50px rgba(16,40,60,.2);
   -webkit-backface-visibility:hidden;backface-visibility:hidden;
   transform:rotateY(calc(var(--i) * 45deg)) translateZ(400px)}
 .carrusel3d img{width:100%;height:100%;object-fit:cover;display:block}
-.carrusel3d figcaption{position:absolute;left:10px;right:10px;bottom:10px;padding:8px 12px;border-radius:12px;font-size:.78rem;font-weight:600;color:var(--ef-oscuro);
-  background:rgba(255,255,255,.75);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-@keyframes girar{to{transform:rotateY(-360deg)}}
+.carrusel3d .gal-foto img{transition:transform .5s var(--ef-ease)}
+.carrusel3d .gal-foto:hover img{transform:scale(1.04)}
+.gal-foto:focus-visible{outline:3px solid var(--ef-cian);outline-offset:3px}
+/* Visor de fotos */
+.visor{border:0;padding:0;margin:auto;background:transparent;max-width:none;max-height:none;overflow:visible;
+  opacity:0;transform:scale(.94);transition:opacity .3s var(--ef-ease),transform .35s var(--ef-ease),overlay .35s allow-discrete,display .35s allow-discrete}
+.visor[open]{opacity:1;transform:none}
+@starting-style{.visor[open]{opacity:0;transform:scale(.94)}}
+.visor::backdrop{background:rgba(9,18,28,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0);transition:all .35s var(--ef-ease),overlay .35s allow-discrete,display .35s allow-discrete}
+.visor[open]::backdrop{background:rgba(9,18,28,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+@starting-style{.visor[open]::backdrop{background:rgba(9,18,28,0);-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0)}}
+.visor img{display:block;max-width:min(92vw,900px);max-height:88vh;width:auto;height:auto;border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.45);filter:blur(1.5px);transition:filter .3s}
+.visor img.lista{filter:none}
+.visor-btn{position:fixed;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;line-height:1;color:#fff;cursor:pointer;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .2s}
+.visor-btn:hover{background:rgba(255,255,255,.25)}
+.visor-cerrar{top:18px;right:18px;font-size:1.1rem}
+.visor-ant{left:18px;top:50%;translate:0 -50%}.visor-sig{right:18px;top:50%;translate:0 -50%}
+.visor-abierto{overflow:hidden}
 .galeria-grid{display:none}
 
 /* ---------- 7. Destacados ---------- */
@@ -279,7 +295,7 @@ section[id],header[id]{scroll-margin-top:130px}
 /* ---------- 15. Ubicación ---------- */
 .ubic-hero{position:relative;border-radius:30px;overflow:hidden;min-height:340px;display:flex;align-items:flex-end;
   padding:36px;margin-bottom:22px;isolation:isolate;box-shadow:0 24px 60px rgba(16,40,60,.16)}
-.ubic-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:-2}
+.ubic-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 4%;z-index:-2}
 .ubic-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(9,22,34,.88),rgba(9,22,34,.1) 65%)}
 .ubic-hero h2{font-size:clamp(2rem,4.4vw,3.2rem);margin-top:8px;color:#fff}
 .ubic-hero .eyebrow{color:var(--ef-cian-claro)}
@@ -337,12 +353,12 @@ section[id],header[id]{scroll-margin-top:130px}
   .hero-v .lead{font-size:.95rem}
   .hero-v .hero-buscar{margin-top:18px}
   .tec-cat,.tec-gal,.tec-dif,.tec-ubi{--w:220px}
-  .tec-cat{top:-30px;right:-70px}.tec-gal{left:-80px}.tec-dif{right:-90px}
+  .tec-cat{top:-30px;right:-70px}.tec-gal{right:-60px;top:-110px;--w:170px}.tec-dif{right:-90px}
   .carrusel3d{display:none}
   .galeria-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-  .galeria-grid figure{position:relative;margin:0;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:3px solid #fff;box-shadow:var(--ef-sombra)}
-  .galeria-grid img{width:100%;height:100%;object-fit:cover}
-  .galeria-grid figcaption{position:absolute;left:8px;right:8px;bottom:8px;padding:6px 10px;border-radius:10px;font-size:.72rem;font-weight:600;color:var(--ef-oscuro);background:rgba(255,255,255,.8)}
+  .galeria-grid .gal-foto{position:relative;width:100%;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:3px solid #fff;box-shadow:var(--ef-sombra)}
+  .galeria-grid img{width:100%;height:100%;object-fit:cover;display:block}
+  .visor-ant,.visor-sig{top:auto;bottom:22px;translate:none}.visor-ant{left:calc(50% - 60px)}.visor-sig{right:calc(50% - 60px)}
   .proceso-g{padding:40px 22px;border-radius:24px}
   .panel-glass{padding:26px 18px;border-radius:22px}
   .banda{padding:40px 16px;border-radius:24px}
@@ -361,7 +377,8 @@ section[id],header[id]{scroll-margin-top:130px}
   .hero-v .hero-cta .btn{flex:1 1 100%}
 }
 @media(prefers-reduced-motion:reduce){
-  .orb,.carrusel3d .anillo,.tec,.hv-pista i::after{animation:none}
+  .orb,.tec,.hv-pista i::after{animation:none}
+  .visor,.visor::backdrop{transition:none}
   .reveal{transform:none;transition:opacity .3s}
   .efcat-card,.efcat-card img,.benef .ic,.dif,.flot{transition:none}
 }

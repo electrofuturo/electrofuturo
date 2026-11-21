@@ -1066,7 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================================
      ZOOM DE PRODUCTO — hover magnifier (desktop) + overlay (móvil)
      ========================================================== */
-  const ZOOM_FACTOR = 2.5;
+  const ZOOM_FACTOR = 2; // aumento sobre la foto tal como se ve (antes 2.5x sobre su tamaño original, demasiado fuerte)
   const LENS_SIZE = 140;
   const esTouch = matchMedia('(hover:none)').matches;
 
@@ -1078,9 +1078,17 @@ document.addEventListener('DOMContentLoaded', () => {
       lensEl = document.createElement('div');
       lensEl.className = 'zoom-lens';
       lensEl.style.backgroundImage = `url("${img.src}")`;
-      lensEl.style.backgroundSize = `${img.naturalWidth * ZOOM_FACTOR}px ${img.naturalHeight * ZOOM_FACTOR}px`;
+      lensEl.style.backgroundRepeat = 'no-repeat';
       container.appendChild(lensEl);
       return lensEl;
+    }
+    // Zona real de la foto dentro del recuadro (object-fit:contain + padding)
+    function cajaFoto(foto, img) {
+      const r = foto.getBoundingClientRect(), cs = getComputedStyle(img);
+      const pw = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight), ph = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+      const k = Math.min((r.width - pw) / img.naturalWidth, (r.height - ph) / img.naturalHeight);
+      const w = img.naturalWidth * k, h = img.naturalHeight * k;
+      return { w, h, x: (r.width - w) / 2, y: (r.height - h) / 2 };
     }
     document.addEventListener('mouseenter', function(e) {
       const foto = e.target.closest('.prod-foto');
@@ -1088,6 +1096,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = foto.querySelector('img');
       if (!img || !img.naturalWidth) return;
       const lens = crearLens(foto, img);
+      const caja = cajaFoto(foto, img);
+      lens.style.backgroundSize = `${caja.w * ZOOM_FACTOR}px ${caja.h * ZOOM_FACTOR}px`;
       const mover = function(ev) {
         const rect = foto.getBoundingClientRect();
         let x = ev.clientX - rect.left;
@@ -1096,8 +1106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y = Math.max(0, Math.min(y, rect.height));
         lens.style.left = (x - LENS_SIZE / 2) + 'px';
         lens.style.top = (y - LENS_SIZE / 2) + 'px';
-        const bgX = (x / rect.width) * img.naturalWidth * ZOOM_FACTOR - LENS_SIZE / 2;
-        const bgY = (y / rect.height) * img.naturalHeight * ZOOM_FACTOR - LENS_SIZE / 2;
+        const bgX = (x - caja.x) * ZOOM_FACTOR - LENS_SIZE / 2;
+        const bgY = (y - caja.y) * ZOOM_FACTOR - LENS_SIZE / 2;
         lens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
         lens.classList.add('activa');
       };
